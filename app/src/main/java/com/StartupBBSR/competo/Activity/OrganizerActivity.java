@@ -1,4 +1,4 @@
-package com.StartupBBSR.competo;
+package com.StartupBBSR.competo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,21 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.StartupBBSR.competo.Activity.LoginActivity;
-import com.StartupBBSR.competo.databinding.ActivityMainBinding;
+import com.StartupBBSR.competo.R;
+import com.StartupBBSR.competo.databinding.ActivityOrganizerBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class OrganizerActivity extends AppCompatActivity {
 
-    private ActivityMainBinding activityMainBinding;
+    private ActivityOrganizerBinding activityOrganizerBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        activityOrganizerBinding = ActivityOrganizerBinding.inflate(getLayoutInflater());
+        setContentView(activityOrganizerBinding.getRoot());
 
-        activityMainBinding.button.setOnClickListener(new View.OnClickListener() {
+        activityOrganizerBinding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();

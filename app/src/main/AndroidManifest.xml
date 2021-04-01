@@ -9,13 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Competo">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.OnboardingActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Activity.SignUpActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.OrganizerActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
