@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.StartupBBSR.competo"
@@ -61,4 +61,6 @@ dependencies {
 //    Navigation Component
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+
+
 }

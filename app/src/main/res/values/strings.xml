@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Competo</string>
+    <string name="communication_form">communication_form</string>
+    <string name="event_pal">event_pal</string>
+    <string name="event">event</string>
+    <string name="home">home</string>
+    <string name="user_activity">User Activity</string>
+    <string name="logout">LogOut</string>
 </resources>
