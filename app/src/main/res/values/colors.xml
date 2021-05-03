@@ -17,4 +17,14 @@
     <color name="faded_light_blue">#F6F9FA</color>
     <color name="light_blue">#0091EA</color>
     <color name="background_blue">#1868A6</color>
+
+
+    <color name="main_background">#263238</color>
+    <color name="accent_gray">#c4cbcc</color>
+    <color name="accent_blue">#5991FB</color>
+    <color name="ui_light_blue">#33B5E5</color>
+    <color name="ui_blue">#007BFF</color>
+    <color name="text_gray">#90999e</color>
+
+
 </resources>

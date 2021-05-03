@@ -6,21 +6,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.StartupBBSR.competo.R;
-import com.StartupBBSR.competo.databinding.ActivityOrganizerBinding;
+import com.StartupBBSR.competo.Activity.LoginActivity;
+import com.StartupBBSR.competo.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class OrganizerActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private ActivityOrganizerBinding activityOrganizerBinding;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityOrganizerBinding = ActivityOrganizerBinding.inflate(getLayoutInflater());
-        setContentView(activityOrganizerBinding.getRoot());
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
-        activityOrganizerBinding.button.setOnClickListener(new View.OnClickListener() {
+        activityMainBinding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
@@ -30,7 +32,7 @@ public class OrganizerActivity extends AppCompatActivity {
         });
 
 
-        activityOrganizerBinding.btnProfile.setOnClickListener(new View.OnClickListener() {
+        activityMainBinding.btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));

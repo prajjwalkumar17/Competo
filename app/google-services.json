@@ -14,22 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "27440644095-hnrmei2m8844aaqk6ij1aobmnan7aohu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.StartupBBSR.competo",
-            "certificate_hash": "e2e7c2555748797dc5f7eb6026e4ea53ca7826a3"
-          }
-        },
-        {
-          "client_id": "27440644095-rht40lmk7nhi29d0npn4r880q58ardhp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.StartupBBSR.competo",
-            "certificate_hash": "3ad42b42c53446bca752f940f59789d5a6c85ffd"
-          }
-        },
-        {
+
           "client_id": "27440644095-ldv3esj4g47lbs7au5e7pkdkf7sstnfu.apps.googleusercontent.com",
           "client_type": 3
         }

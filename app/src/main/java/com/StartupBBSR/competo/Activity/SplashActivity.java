@@ -27,6 +27,9 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 2000);
+
+        }, 500);
+        // TODO: 4/25/2021 make it 2000
+
     }
 }
