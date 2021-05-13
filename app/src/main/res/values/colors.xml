@@ -27,4 +27,7 @@
     <color name="text_gray">#90999e</color>
 
 
+    <color name="main_accent_1">#264757</color>
+    <color name="main_accent_2">#303F47</color>
+
 </resources>

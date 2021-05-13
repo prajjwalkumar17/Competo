@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String userId;
 
 
-    Fragment profileFragment = null;
+    Fragment fragment = null;
     FragmentManager profileFragmentManager;
     FragmentTransaction profileFragmentTransaction;
 
@@ -63,11 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        profileFragment = new ProfileAboutFragment();
+        fragment = new ProfileAboutFragment();
         profileFragmentManager = getSupportFragmentManager();
         profileFragmentTransaction = profileFragmentManager.beginTransaction();
 
-        profileFragmentTransaction.replace(R.id.profileFrameLayout, profileFragment);
+        profileFragmentTransaction.replace(R.id.profileFrameLayout, fragment);
         profileFragmentTransaction.commit();
 
 
@@ -76,29 +76,29 @@ public class ProfileActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        profileFragment = new ProfileAboutFragment();
+                        fragment = new ProfileAboutFragment();
                         Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 1:
-                        profileFragment = new ProfileMyeventsFragment();
+                        fragment = new ProfileMyeventsFragment();
                         Toast.makeText(getApplicationContext(), "My Events", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
-                        profileFragment = new ProfileInterestsFragment();
+                        fragment = new ProfileInterestsFragment();
                         Toast.makeText(getApplicationContext(), "Interests", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
-                        profileFragment = new ProfileUpdatesFragment();
+                        fragment = new ProfileUpdatesFragment();
                         Toast.makeText(getApplicationContext(), "Updates", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
                 profileFragmentManager = getSupportFragmentManager();
                 profileFragmentTransaction = profileFragmentManager.beginTransaction();
-                profileFragmentTransaction.replace(R.id.profileFrameLayout, profileFragment);
+                profileFragmentTransaction.replace(R.id.profileFrameLayout, fragment);
                 profileFragmentTransaction.commit();
 
             }
