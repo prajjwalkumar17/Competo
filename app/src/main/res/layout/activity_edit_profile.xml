@@ -7,25 +7,14 @@
     android:background="@color/main_background"
     tools:context=".Activity.EditProfileActivity">
 
-    <ImageView
-        android:id="@+id/btnSaveProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Save Changes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_save_24" />
-
     <TextView
         android:id="@+id/tvEditProfileBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-medium"
+        android:textSize="18sp"
         android:text="Edit Profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         app:drawableLeftCompat="@drawable/ic_baseline_keyboard_arrow_left_24"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,25 +54,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_rel_layout" />
 
-            <EditText
-                android:id="@+id/etEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/accent_gray"
-                android:ems="10"
-                android:hint="Enter Email"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress|textMultiLine"
-                android:maxLines="2"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
             <RelativeLayout
                 android:id="@+id/image_rel_layout"
                 android:layout_width="wrap_content"
@@ -109,6 +79,14 @@
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="1dp"
                     app:civ_circle_background_color="@color/white" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:visibility="gone"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
 
             </RelativeLayout>
@@ -139,27 +117,15 @@
                 app:layout_constraintBottom_toTopOf="@+id/etName"
                 app:layout_constraintStart_toEndOf="@+id/image_rel_layout" />
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="Email"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BioTIL" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/BioTIL"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="16dp"
+                android:maxHeight="150dp"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,13 +133,15 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/BioTV"
+                    android:gravity="start"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_border"
                     android:hint="Enter Bio"
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
-                    android:maxLines="2"
+                    android:maxLength="100"
+                    android:maxHeight="150dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/accent_gray" />
 
@@ -184,13 +152,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
                 android:text="Phone"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:layout_marginTop="24dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/BioTIL" />
 
             <EditText
                 android:id="@+id/etPhone"
@@ -230,17 +198,38 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="16dp"
-                android:ems="10"
                 android:backgroundTint="@color/accent_gray"
                 android:hint="Enter LinkedIn Address"
-                android:maxLines="2"
-                android:textColorHint="@color/text_gray"
-                android:textColor="@color/white"
-                android:inputType="textMultiLine"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:inputType="textUri"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_gray"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+            <Button
+                android:id="@+id/btnSaveProfile"
+                android:layout_width="@dimen/standard_width"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/grid_4x"
+                android:text="Save Changes"
+                android:background="@drawable/button_round_shape"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/uploadingProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/grid_4x"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

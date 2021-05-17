@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/profileMainFragment">
+
+    <fragment
+        android:id="@+id/interestChipFragment"
+        android:name="com.StartupBBSR.competo.Fragments.InterestChipFragment"
+        android:label="fragment_interest_chip"
+        tools:layout="@layout/fragment_interest_chip" >
+        <action
+            android:id="@+id/action_interestChipFragment_to_profileMainFragment"
+            app:destination="@id/profileMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_in_right"
+            app:popUpTo="@id/profileMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/editProfileActivity"
+        android:name="com.StartupBBSR.competo.Activity.EditProfileActivity"
+        android:label="activity_edit_profile"
+        tools:layout="@layout/activity_edit_profile" />
+    <fragment
+        android:id="@+id/profileMainFragment"
+        android:name="com.StartupBBSR.competo.Fragments.ProfileMainFragment"
+        android:label="fragment_profile_main"
+        tools:layout="@layout/fragment_profile_main" >
+        <action
+            android:id="@+id/action_profileMainFragment_to_interestChipFragment"
+            app:destination="@id/interestChipFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileMainFragment_to_editProfileActivity2"
+            app:destination="@id/editProfileActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+</navigation>

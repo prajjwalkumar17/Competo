@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.StartupBBSR.competo.Listeners.addOnTextChangeListener;
 import com.StartupBBSR.competo.R;
+import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityLoginBinding;
 import com.StartupBBSR.competo.databinding.AlertlayoutBinding;
 import com.facebook.AccessToken;
@@ -73,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
     private String m_mail = "";
     DocumentSnapshot document;
 
+    private Constant constant;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDB = FirebaseFirestore.getInstance();
+
+        constant = new Constant();
 
 //        For fb
         mCallbackManager = CallbackManager.Factory.create();
@@ -307,16 +312,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     document = task.getResult();
-                    userInfo.put("Name", user.getDisplayName());
-                    userInfo.put("Email", user.getEmail());
-                    userInfo.put("Bio", document.getString("Bio"));
-                    userInfo.put("Photo", document.getString("Photo"));
-                    userInfo.put("linkedIn", document.getString("linkedIn"));
-                    userInfo.put("Phone", document.getString("Phone"));
+                    userInfo.put(constant.getUserNameField(), user.getDisplayName());
+                    userInfo.put(constant.getUserEmailField(), user.getEmail());
+                    userInfo.put(constant.getUserBioField(), document.getString(constant.getUserBioField()));
+                    userInfo.put(constant.getUserPhotoField(), document.getString(constant.getUserPhotoField()));
+                    userInfo.put(constant.getUserLinkedinField(), document.getString(constant.getUserLinkedinField()));
+                    userInfo.put(constant.getUserPhoneField(), document.getString(constant.getUserPhoneField()));
 
                 } else {
-                    userInfo.put("Name", user.getDisplayName());
-                    userInfo.put("Email", user.getEmail());
+                    userInfo.put(constant.getUserNameField(), user.getDisplayName());
+                    userInfo.put(constant.getUserEmailField(), user.getEmail());
                 }
             }
         });
@@ -324,9 +329,9 @@ public class LoginActivity extends AppCompatActivity {
 
 //        Now we check the role selected
         if (temp_flag == 0)
-            userInfo.put("isUser", "1");
+            userInfo.put(constant.getUserisUserField(), "1");
         else
-            userInfo.put("isOrganizer", "1");
+            userInfo.put(constant.getUserisOrganizerField(), "1");
 
         documentReference.update(userInfo);
 
@@ -441,11 +446,11 @@ public class LoginActivity extends AppCompatActivity {
 //            Now this document snapshot will contain the data of the document referenced above
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 //                Now to identify the user role
-                if (documentSnapshot.getString("isOrganizer") != null) {
+                if (documentSnapshot.getString(constant.getUserisOrganizerField()) != null) {
 //                    organizer role
                     startActivity(new Intent(getApplicationContext(), OrganizerActivity.class));
                     finish();
-                } else if (documentSnapshot.getString("isUser") != null) {
+                } else if (documentSnapshot.getString(constant.getUserisUserField()) != null) {
 //                    User role
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();

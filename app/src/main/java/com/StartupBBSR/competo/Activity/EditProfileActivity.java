@@ -1,28 +1,41 @@
 package com.StartupBBSR.competo.Activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.StartupBBSR.competo.Models.UserModel;
+import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityEditProfileBinding;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,12 +47,17 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseDB;
     private FirebaseStorage firebaseStorage;
-    private StorageReference storageReference;
+
     private String userId;
 
     private int flag = 0;
+
+    private Constant constant;
+    private UserModel userModel;
+
     private int REQUEST_PHOTO_CODE = 123;
-    private Uri profileImageUri, mUri;
+    private Uri profileImageUri, downloadUri;
+    private UploadTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,49 +65,28 @@ public class EditProfileActivity extends AppCompatActivity {
         activityEditProfileBinding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(activityEditProfileBinding.getRoot());
 
-//        Hide the action bar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDB = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
         userId = firebaseAuth.getUid();
 
-        firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference();
+        constant = new Constant();
+//        Get data from Main Activity via get Intent
+        userModel = (UserModel) getIntent().getSerializableExtra(constant.getUserModelObject());
 
-        DocumentReference documentReference = firebaseDB.collection("Users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        activityEditProfileBinding.btnEditProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                activityEditProfileBinding.etName.setText(value.getString("Name"));
-                activityEditProfileBinding.etEmail.setText(value.getString("Email"));
-                activityEditProfileBinding.etPhone.setText(value.getString("Phone"));
-                activityEditProfileBinding.BioTV.setText(value.getString("Bio"));
-                activityEditProfileBinding.etLinkedIn.setText(value.getString("LinkedIn"));
-                Glide.with(getApplicationContext()).load(value.getString("Photo"))
-                        .into(activityEditProfileBinding.profileImage);
-//                activityEditProfileBinding.profileImage.setImageURI(Uri.parse(value.getString("Photo")));
-
+            public void onClick(View view) {
+                pickImage();
             }
         });
 
         activityEditProfileBinding.btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!activityEditProfileBinding.etLinkedIn.getText().toString().isEmpty())
+                    checkaddress();
                 verifyInput();
-            }
-        });
-
-
-        activityEditProfileBinding.btnEditProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_PHOTO_CODE);
             }
         });
 
@@ -99,41 +96,59 @@ public class EditProfileActivity extends AppCompatActivity {
                 EditProfileActivity.super.onBackPressed();
             }
         });
+
+        setInitialData();
+    }
+
+    private void checkaddress() {
+        String address = activityEditProfileBinding.etLinkedIn.getText().toString();
+        String maddress;
+        if (address.contains("https://"))
+            maddress = address;
+        else
+            maddress = "https://" + address;
+        activityEditProfileBinding.etLinkedIn.setText(maddress);
+    }
+
+    private void setInitialData() {
+        activityEditProfileBinding.etName.setText(userModel.getUserName());
+        activityEditProfileBinding.BioTV.setText(userModel.getUserBio());
+        activityEditProfileBinding.etPhone.setText(userModel.getUserPhone());
+        activityEditProfileBinding.etLinkedIn.setText(userModel.getUserLinkedin());
+        if (userModel.getUserPhoto() != null)
+            loadUsingGlide(userModel.getUserPhoto());
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, REQUEST_PHOTO_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PHOTO_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            profileImageUri = data.getData();
-            activityEditProfileBinding.profileImage.setImageURI(profileImageUri);
-            // TODO: 4/25/2021 shift uploadPicture
-            uploadPicture();
-        }
-    }
-
-    private void uploadPicture() {
-        StorageReference ref = storageReference.child("ProfileImages/" + userId);
-        ref.putFile(profileImageUri);
-
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                mUri = uri;
-                Log.d("test", "onSuccess: " + mUri);
+        if (requestCode == REQUEST_PHOTO_CODE && resultCode == RESULT_OK) {
+            if (data == null) {
+                Toast.makeText(this, "Error fetching Image", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
+
+            profileImageUri = data.getData();
+            loadUsingGlide(profileImageUri.toString());
+
+        }
     }
 
     private void verifyInput() {
         flag = 0;
         checkEmptyField(activityEditProfileBinding.etName);
         checkEmptyField(activityEditProfileBinding.BioTV);
-        checkEmptyField(activityEditProfileBinding.etEmail);
         checkEmptyField(activityEditProfileBinding.etPhone);
         checkEmptyField(activityEditProfileBinding.etLinkedIn);
 
-        if (flag == 5) {
+        if (flag == 4) {
             updateUser();
         } else {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
@@ -149,20 +164,113 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void updateUser() {
 
+        activityEditProfileBinding.btnSaveProfile.setVisibility(View.GONE);
+        activityEditProfileBinding.uploadingProgressBar.setVisibility(View.VISIBLE);
 
-        DocumentReference documentReference = firebaseDB.collection("Users")
+        StorageReference storageReference = firebaseStorage
+                .getReference()
+                .child(constant.getProfilePictures() + "/" + userId);
+
+        if (profileImageUri != null) {
+//            Compressing the image
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profileImageUri);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] data = baos.toByteArray();
+
+                uploadTask = storageReference.putBytes(data);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            uploadTask = storageReference.putFile(imguri);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(EditProfileActivity.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+//                    activityEditProfileBinding.uploadingProgressBar.setVisibility(View.GONE);
+//                    activityEditProfileBinding.btnSaveProfile.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(EditProfileActivity.this, "Error:\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    activityEditProfileBinding.uploadingProgressBar.setVisibility(View.GONE);
+                    activityEditProfileBinding.btnSaveProfile.setVisibility(View.VISIBLE);
+                }
+            });
+
+            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful())
+                        throw task.getException();
+
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        downloadUri = task.getResult();
+                        saveData();
+                    }
+                }
+            });
+        } else {
+            saveData();
+        }
+
+    }
+
+    private void saveData() {
+
+        activityEditProfileBinding.btnSaveProfile.setVisibility(View.GONE);
+        activityEditProfileBinding.uploadingProgressBar.setVisibility(View.VISIBLE);
+
+        DocumentReference documentReference = firebaseDB.collection(constant.getUsers())
                 .document(userId);
 
         Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("Name", activityEditProfileBinding.etName.getText().toString());
-        userInfo.put("Phone", activityEditProfileBinding.etPhone.getText().toString());
-        userInfo.put("Email", activityEditProfileBinding.etEmail.getText().toString());
-        userInfo.put("LinkedIn", activityEditProfileBinding.etLinkedIn.getText().toString());
-        userInfo.put("Bio", activityEditProfileBinding.BioTV.getText().toString());
-//        Log.d("test", "onSuccess: " + mUri);
-        if (mUri != null){
-            userInfo.put("Photo", mUri.toString());
-        }
-        documentReference.update(userInfo);
+
+        userInfo.put(constant.getUserNameField(), activityEditProfileBinding.etName.getText().toString());
+        userInfo.put(constant.getUserPhoneField(), activityEditProfileBinding.etPhone.getText().toString());
+        userInfo.put(constant.getUserLinkedinField(), activityEditProfileBinding.etLinkedIn.getText().toString());
+        userInfo.put(constant.getUserBioField(), activityEditProfileBinding.BioTV.getText().toString());
+
+        if (downloadUri != null)
+            userInfo.put(constant.getUserPhotoField(), downloadUri.toString());
+
+        documentReference.update(userInfo)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        activityEditProfileBinding.btnSaveProfile.setVisibility(View.VISIBLE);
+                        activityEditProfileBinding.uploadingProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(EditProfileActivity.this, "Data updated", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+
+    }
+
+
+    private void loadUsingGlide(String imgurl) {
+        Glide.with(this).
+                load(imgurl).
+                listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        activityEditProfileBinding.progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        activityEditProfileBinding.progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(activityEditProfileBinding.profileImage);
     }
 }

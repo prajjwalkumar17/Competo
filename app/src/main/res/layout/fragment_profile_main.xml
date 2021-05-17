@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pullToRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context=".Fragments.ProfileMainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/grid_3x"
+            android:layout_marginRight="@dimen/grid_3x"
+            android:layout_marginBottom="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_3x"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/interestChipRecyclerView">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/profile_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_background"
+                android:fillViewport="true"
+                app:tabTextAppearance="@style/ProfileCustomTabText"
+                app:tabTextColor="@color/white">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My events" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Interests" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Updates" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/profileViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/image_rel_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_3x"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/profile_image"
+                android:layout_alignBottom="@id/profile_image"
+                android:src="@drawable/ic_baseline_edit_24" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/grid_3x"
+                android:visibility="gone" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:paddingStart="@dimen/grid_2x"
+                android:paddingEnd="@dimen/grid_2x"
+                android:src="@drawable/ic_baseline_person_24"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/main_background" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:paddingStart="@dimen/grid_3x"
+            android:paddingTop="@dimen/grid_1x"
+            android:scrollHorizontally="true"
+            tools:text = "Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
+            app:layout_constraintTop_toTopOf="@+id/image_rel_layout" />
+
+        <TextView
+            android:id="@+id/profile_brief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingStart="@dimen/grid_3x"
+            android:text="Web developer, HR, Coder"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
+            app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_gotolinkedin"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:src="@drawable/linkedin_logo"
+            app:civ_circle_background_color="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/image_rel_layout"
+            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
+            app:layout_constraintTop_toBottomOf="@+id/profile_brief" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_3x"
+            android:text="Interests"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_rel_layout"
+            app:layout_constraintTop_toBottomOf="@+id/image_rel_layout" />
+
+        <ImageView
+            android:id="@+id/btnEditInterests"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/interestChipRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="135dp"
+            tools:listitem="@layout/interest_chip_item"
+            android:paddingTop="@dimen/grid_1x"
+            android:paddingBottom="@dimen/grid_1x"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:layout_marginEnd="@dimen/grid_3x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

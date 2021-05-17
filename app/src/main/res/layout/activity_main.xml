@@ -55,7 +55,8 @@
         android:background="@color/main_accent_1"
         app:itemIconTint="@color/accent_gray"
         app:itemTextColor="@color/accent_gray"
-        app:menu="@menu/main_drawer_menu">
+        app:menu="@menu/main_drawer_menu"
+        app:headerLayout="@layout/drawer_header">
 
     </com.google.android.material.navigation.NavigationView>
 
