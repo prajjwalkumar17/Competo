@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inbox_nav_graph"
+    app:startDestination="@id/inbox_main">
+
+    <fragment
+        android:id="@+id/inbox_main"
+        android:name="com.StartupBBSR.competo.Fragments.inbox_main"
+        android:label="fragment_inbox_main"
+        tools:layout="@layout/fragment_inbox_main" />
+    <fragment
+        android:id="@+id/messageRequestFragment2"
+        android:name="com.StartupBBSR.competo.Fragments.MessageRequestFragment"
+        android:label="fragment_message_request"
+        tools:layout="@layout/fragment_message_request" >
+        <action
+            android:id="@+id/action_messageRequestFragment2_to_inbox_main2"
+            app:destination="@id/inbox_main" />
+    </fragment>
+</navigation>

@@ -8,7 +8,9 @@
             android:thickness="4dp"
             android:innerRadius="0dp"
             android:useLevel="false" >
+            <solid android:color="#202027" />
             <solid android:color="#161617" />
+
 
         </shape>
     </item>

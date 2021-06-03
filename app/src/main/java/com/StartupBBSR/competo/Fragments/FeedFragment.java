@@ -5,29 +5,40 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.StartupBBSR.competo.Models.BannerEvent;
 import com.StartupBBSR.competo.R;
+import com.StartupBBSR.competo.databinding.FragmentFeedBinding;
+import com.StartupBBSR.competo.databinding.FragmentFeedMainBinding;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FeedFragment extends Fragment {
+View view;
+
+private FragmentFeedBinding binding;
+
 
     public FeedFragment() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        binding = FragmentFeedBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+
+
+        return view;
     }
+
 }

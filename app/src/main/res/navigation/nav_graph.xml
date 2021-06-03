@@ -25,4 +25,9 @@
         android:name="com.StartupBBSR.competo.Fragments.ProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.StartupBBSR.competo.Fragments.InboxFragment"
+        android:label="@string/inbox"
+        tools:layout="@layout/fragment_inbox" />
 </navigation>
