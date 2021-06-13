@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/eventDetailsMotionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    app:layoutDescription="@xml/fragment_event_details_scene"
+    tools:context=".Fragments.EventDetailsFragment">
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_margin="@dimen/grid_3x"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="@dimen/grid_2x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/grid_1x"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvEventDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_1x"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_tv_background"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/grid_2x"
+                    android:paddingBottom="@dimen/grid_2x"
+                    android:text="24-SEP-21"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvEventVenue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_1x"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_tv_background"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:paddingTop="@dimen/grid_2x"
+                    android:paddingBottom="@dimen/grid_2x"
+                    android:text="Raghunathpur"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvEventTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_1x"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_tv_background"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/grid_2x"
+                    android:paddingBottom="@dimen/grid_2x"
+                    android:text="12:32 PM"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tvEventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Event Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:text="About"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvEventDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_1x"
+                    android:background="@drawable/rounded_tv_background"
+                    android:backgroundTint="@color/main_accent_2"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:maxHeight="135dp"
+                    android:minHeight="100dp"
+                    android:maxLength="500"
+                    android:padding="@dimen/grid_2x"
+                    android:text="This is example of a long description. This is used to test how some descriptions of events can possibly look like"
+                    android:textColor="@color/white" />
+
+            </androidx.core.widget.NestedScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/eventTagRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:paddingStart="@dimen/grid_2x"
+                android:paddingTop="@dimen/grid_2x"
+                android:paddingEnd="@dimen/grid_2x"
+                android:paddingBottom="@dimen/grid_2x"
+                tools:listitem="@layout/interest_chip_item" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:orientation="horizontal"
+                android:padding="@dimen/grid_3x"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnEventRegister"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2x"
+                    android:layout_weight="1"
+                    android:background="@drawable/eventpal_button_round"
+                    android:text="Register"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/btnEventFindPal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/grid_2x"
+                    android:layout_weight="1"
+                    android:background="@drawable/eventpal_button_round"
+                    android:text="Find a TeamMate"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="@dimen/grid_3x"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="@dimen/grid_3x"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/city" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

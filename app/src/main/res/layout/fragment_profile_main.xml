@@ -99,7 +99,7 @@
                 android:paddingStart="@dimen/grid_2x"
                 android:paddingEnd="@dimen/grid_2x"
                 android:src="@drawable/ic_baseline_person_24"
-                app:civ_border_color="#FF000000"
+                app:civ_border_color="@color/main_accent_1"
                 app:civ_border_width="1dp"
                 app:civ_circle_background_color="@color/main_background" />
 
@@ -111,7 +111,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:paddingStart="@dimen/grid_3x"
             android:paddingTop="@dimen/grid_1x"
@@ -119,21 +118,24 @@
             tools:text = "Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
             app:layout_constraintTop_toTopOf="@+id/image_rel_layout" />
 
         <TextView
             android:id="@+id/profile_brief"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="sans-serif-condensed"
             android:paddingStart="@dimen/grid_3x"
             android:text="Web developer, HR, Coder"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
@@ -143,6 +145,8 @@
             android:layout_height="24dp"
             android:layout_marginStart="@dimen/grid_3x"
             android:src="@drawable/linkedin_logo"
+            app:civ_border_color="@color/ui_blue"
+            app:civ_border_width="0.5dp"
             app:civ_circle_background_color="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/image_rel_layout"
             app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
@@ -181,6 +185,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <ImageView
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_2x"
+            android:layout_marginEnd="@dimen/grid_2x"
+            android:src="@drawable/ic_baseline_refresh_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_brief" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

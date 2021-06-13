@@ -74,6 +74,17 @@ public class ProfileMainFragment extends Fragment {
             }
         });
 
+        binding.pullToRefresh.setEnabled(false);
+
+        binding.btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.pullToRefresh.setRefreshing(true);
+                loadData();
+                binding.pullToRefresh.setRefreshing(false);
+            }
+        });
+
 
         init();
         initDataSet();
@@ -82,6 +93,17 @@ public class ProfileMainFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
         InterestChipAdapter adapter = new InterestChipAdapter(mDataSet);
         recyclerView.setAdapter(adapter);
+
+        if (userModel.getUserChips() == null)
+            binding.profileBrief.setText("");
+        else {
+            String[] tempData = new String[3];
+            for (int i = 0; i < 3; i++) {
+                tempData[i] = userModel.getUserChips().get(i);
+            }
+
+            binding.profileBrief.setText(Arrays.toString(tempData).replaceAll("\\[|\\]", ""));
+        }
 
         return view;
     }
@@ -95,15 +117,9 @@ public class ProfileMainFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
-        binding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-                binding.pullToRefresh.setRefreshing(false);
-            }
-        });
 
-        if (userModel.getUserLinkedin() == null){
+
+        if (userModel.getUserLinkedin() == null) {
             binding.ivGotolinkedin.setVisibility(View.GONE);
         }
 
@@ -120,10 +136,12 @@ public class ProfileMainFragment extends Fragment {
     private void loadData() {
         binding.profileName.setText(userModel.getUserName());
         String imgurl = userModel.getUserPhoto();
-        if (imgurl != null){
+
+        if (imgurl != null) {
             binding.progressBar.setVisibility(View.VISIBLE);
             loadUsingGlide(imgurl);
         }
+
     }
 
     private void loadUsingGlide(String imgurl) {
@@ -155,10 +173,9 @@ public class ProfileMainFragment extends Fragment {
     }
 
     private void initDataSet() {
-
-        mDataSet = userModel.getUserChips();
-
-        Log.d("recycler", "initDataSet: " + Arrays.asList(mDataSet));
+        if (userModel.getUserChips() != null)
+            mDataSet = userModel.getUserChips();
+//        Log.d("chips", "initDataSet: " + Arrays.asList(mDataSet));
     }
 
     private class ProfileViewPagerFragmentAdapter extends FragmentStateAdapter {

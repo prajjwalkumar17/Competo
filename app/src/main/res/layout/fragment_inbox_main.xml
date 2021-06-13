@@ -4,17 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.inbox_main">
+    android:background="@color/main_background"
+    tools:context=".Fragments.InboxMainFragment">
+
+   <TextView
+       android:id="@+id/tvMessageRequest"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Message Requests"
+       android:textSize="16sp"
+       android:textColor="@color/ui_light_blue"
+       android:visibility="gone"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintEnd_toEndOf="parent" />
 
    <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/index_main"
-       android:layout_width="match_parent"
+       android:id="@+id/chatListRecyclerView"
+       android:layout_width="0dp"
        android:layout_height="0dp"
        tools:listitem="@layout/inbox_item"
-       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+       android:layout_marginTop="@dimen/grid_1x"
+       android:layout_marginStart="@dimen/grid_2x"
+       android:layout_marginEnd="@dimen/grid_2x"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />
+       app:layout_constraintTop_toBottomOf="@id/tvMessageRequest" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

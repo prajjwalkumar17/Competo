@@ -176,7 +176,9 @@ public class EditProfileActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profileImageUri);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+
+//                Higher the number, higher the quality
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
                 byte[] data = baos.toByteArray();
 
                 uploadTask = storageReference.putBytes(data);

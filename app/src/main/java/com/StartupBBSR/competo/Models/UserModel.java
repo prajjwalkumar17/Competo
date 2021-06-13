@@ -7,8 +7,28 @@ public class UserModel implements Serializable {
     String userName, userEmail, userPhoto, userPhone;
     String userBio;
     String userLinkedin;
-    String userRole;
+    String userRole, organizerRole;
+    String userID;
     List<String> userChips;
+
+    private String lastMessage;
+
+    public UserModel() {
+    }
+
+    public UserModel(String userName, String userEmail, String userPhoto, String userPhone, String userBio, String userLinkedin, String userRole, String organizerRole, String userID, List<String> userChips, String lastMessage) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPhoto = userPhoto;
+        this.userPhone = userPhone;
+        this.userBio = userBio;
+        this.userLinkedin = userLinkedin;
+        this.userRole = userRole;
+        this.organizerRole = organizerRole;
+        this.userID = userID;
+        this.userChips = userChips;
+        this.lastMessage = lastMessage;
+    }
 
     public String getOrganizerRole() {
         return organizerRole;
@@ -17,8 +37,6 @@ public class UserModel implements Serializable {
     public void setOrganizerRole(String organizerRole) {
         this.organizerRole = organizerRole;
     }
-
-    String organizerRole;
 
     public String getUserName() {
         return userName;
@@ -82,5 +100,21 @@ public class UserModel implements Serializable {
 
     public void setUserChips(List<String> userChips) {
         this.userChips = userChips;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 }

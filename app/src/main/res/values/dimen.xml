@@ -10,4 +10,7 @@
     <dimen name="standard_corner_radius">25dp</dimen>
     <dimen name="standard_image">50dp</dimen>
     <dimen name="small_image">30dp</dimen>
+
+    <dimen name="bottom_sheet_expanded_height">550dp</dimen>
+    <dimen name="bottom_sheet_collapsed_height">350dp</dimen>
 </resources>

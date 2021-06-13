@@ -138,9 +138,10 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_border"
                     android:hint="Enter Bio"
+                    android:maxLines="15"
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
-                    android:maxLength="100"
+                    android:maxLength="200"
                     android:maxHeight="150dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/accent_gray" />

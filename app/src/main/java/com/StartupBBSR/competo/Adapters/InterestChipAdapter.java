@@ -17,7 +17,7 @@ public class InterestChipAdapter extends RecyclerView.Adapter<InterestChipAdapte
     private static InterestChipItemBinding binding;
     private List<String> localDataSet;
 
-    public InterestChipAdapter(List<String> dataSet){
+    public InterestChipAdapter(List<String> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -35,7 +35,10 @@ public class InterestChipAdapter extends RecyclerView.Adapter<InterestChipAdapte
 
     @Override
     public int getItemCount() {
-        return localDataSet.size();
+        if (localDataSet == null)
+            return 0;
+        else
+            return localDataSet.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

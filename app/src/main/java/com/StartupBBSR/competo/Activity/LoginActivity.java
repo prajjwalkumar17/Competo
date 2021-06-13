@@ -318,30 +318,45 @@ public class LoginActivity extends AppCompatActivity {
                     userInfo.put(constant.getUserPhotoField(), document.getString(constant.getUserPhotoField()));
                     userInfo.put(constant.getUserLinkedinField(), document.getString(constant.getUserLinkedinField()));
                     userInfo.put(constant.getUserPhoneField(), document.getString(constant.getUserPhoneField()));
+                    userInfo.put(constant.getUserIdField(), document.getString(constant.getUserIdField()));
+                    userInfo.put(constant.getLastMessage(), document.getString(constant.getLastMessage()));
 
                 } else {
                     userInfo.put(constant.getUserNameField(), user.getDisplayName());
                     userInfo.put(constant.getUserEmailField(), user.getEmail());
+                    userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
                 }
             }
         });
 
 
 //        Now we check the role selected
-        if (temp_flag == 0)
+        if (temp_flag == 0) {
             userInfo.put(constant.getUserisUserField(), "1");
-        else
+            userInfo.put(constant.getUserisOrganizerField(), "0");
+        }
+        else {
             userInfo.put(constant.getUserisOrganizerField(), "1");
+            userInfo.put(constant.getUserisUserField(), "0");
+        }
 
         documentReference.update(userInfo);
 
-        if (temp_flag == 0) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        } else {
-            startActivity(new Intent(getApplicationContext(), OrganizerActivity.class));
-            finish();
-        }
+//        if (temp_flag == 0) {
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            finish();
+//        } else {
+//            startActivity(new Intent(getApplicationContext(), OrganizerActivity.class));
+//            finish();
+//        }
+
+        if (temp_flag == 0)
+            Toast.makeText(this, "User Mode", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Organizer Mode", Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
 
     }
 
@@ -372,8 +387,9 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     Toast.makeText(LoginActivity.this, "LogIn Successful", Toast.LENGTH_SHORT).show();
-                    checkUserRoleAndSignIn(firebaseAuth.getCurrentUser().getUid());
                     activityLoginBinding.loginProgressLayout.setVisibility(View.GONE);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -433,30 +449,6 @@ public class LoginActivity extends AppCompatActivity {
         });
         builder.show();
 
-    }
-
-    private void checkUserRoleAndSignIn(String uid) {
-//        To retrieve data from the database to check role of the user (organizer or user)
-        DocumentReference documentReference = firebaseDB
-                .collection("Users")
-                .document(uid);
-
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-//            Now this document snapshot will contain the data of the document referenced above
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                Now to identify the user role
-                if (documentSnapshot.getString(constant.getUserisOrganizerField()) != null) {
-//                    organizer role
-                    startActivity(new Intent(getApplicationContext(), OrganizerActivity.class));
-                    finish();
-                } else if (documentSnapshot.getString(constant.getUserisUserField()) != null) {
-//                    User role
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                }
-            }
-        });
     }
 
     private void textChangedListener(TextInputEditText ET, TextInputLayout TIL) {

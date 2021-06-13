@@ -4,8 +4,6 @@
 
     <string name="facebook_app_id">299720761533766</string>
     <string name="fb_login_protocol_scheme">fb299720761533766</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <string name="inbox">Inbox</string>
@@ -18,5 +16,39 @@
     <string name="message_request">Message Request</string>
     <string name="more">more</string>
 
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="FilterChips">
+        <item>Web Development</item>
+        <item>Social Science</item>
+        <item>Marketing</item>
+        <item>App Development</item>
+        <item>UI/UX</item>
+        <item>Coder</item>
+        <item>Hackathon</item>
+        <item>Photowalk</item>
+        <item>HR</item>
+        <item>Workshop</item>
+        <item>AI</item>
+        <item>Robotics</item>
+        <item>Content Writing</item>
+        <item>Graphic Designer</item>
+        <item>Video Editor</item>
+        <item>Photo Editor</item>
+        <item>Virtual Reality</item>
+        <item>Machine Learning</item>
+        <item>Data Science</item>
+        <item>IoT</item>
+        <item>Leadership</item>
+        <item>HOD</item>
+        <item>Cloud Computing</item>
+        <item>Cyber Security</item>
+        <item>Communication</item>
+
+
+        <item>Public Speaking</item>
+
+    </string-array>
 
 </resources>

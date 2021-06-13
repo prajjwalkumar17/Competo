@@ -5,11 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import com.StartupBBSR.competo.Adapters.BannerEventPagerAdapter;
 import com.StartupBBSR.competo.Adapters.VerticalRecyclerViewAdapter;
 import com.StartupBBSR.competo.Models.BannerEvent;
@@ -24,16 +19,22 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 
 public class FeedMainFragment extends Fragment {
     FragmentFeedMainBinding binding;
     BannerEventPagerAdapter bannerEventPagerAdapter;
     TabLayout indicatorTab;
     ViewPager bannerViewPager;
-    List<BannerEvent>FeedBannerList;
+    List<BannerEvent> FeedBannerList;
     RecyclerView verticalRecycleView;
     VerticalRecyclerViewAdapter adapter;
-     ArrayList<VerticalModel>arrayListVertical;
+    ArrayList<VerticalModel> arrayListVertical;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +50,12 @@ public class FeedMainFragment extends Fragment {
         View view = binding.getRoot();
 
         //VerticalRecyclerView
-        arrayListVertical=new ArrayList<>();
-        verticalRecycleView =view.findViewById(R.id.recyclerView);
+        arrayListVertical = new ArrayList<>();
+        verticalRecycleView = view.findViewById(R.id.recyclerView);
         verticalRecycleView.setHasFixedSize(true);
-        verticalRecycleView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        verticalRecycleView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        adapter=new VerticalRecyclerViewAdapter(getContext(), arrayListVertical);
+        adapter = new VerticalRecyclerViewAdapter(getContext(), arrayListVertical);
         verticalRecycleView.setAdapter(adapter);
         setData();
 
@@ -77,29 +78,29 @@ public class FeedMainFragment extends Fragment {
     }
 
     private void setData() {
-        for (int i=1; i<=5; i++){
-            VerticalModel mVerticalModel =new VerticalModel();
+        for (int i = 1; i <= 5; i++) {
+            VerticalModel mVerticalModel = new VerticalModel();
 
-            mVerticalModel.setTitle("Title"+i);
+            mVerticalModel.setTitle("Title" + i);
 
-            ArrayList<HorizontalModel>arrayList = new ArrayList<>();
+            ArrayList<HorizontalModel> arrayList = new ArrayList<>();
 
-            for (int j=0; j<=5; j++){
+            for (int j = 0; j <= 5; j++) {
 
-                HorizontalModel mHorizontalModel =new HorizontalModel();
-                mHorizontalModel.setDescription("Description"+j);
-                mHorizontalModel.setName("Name"+j);
+                HorizontalModel mHorizontalModel = new HorizontalModel();
+                mHorizontalModel.setDescription("Description" + j);
+                mHorizontalModel.setName("Name" + j);
                 arrayList.add(mHorizontalModel);
 
             }
             mVerticalModel.setArrayList(arrayList);
-              arrayListVertical.add(mVerticalModel);
-            }
+            arrayListVertical.add(mVerticalModel);
+        }
 
         adapter.notifyDataSetChanged();
     }
 
-    private void setBannerEventPagerAdapter(List<BannerEvent>FeedBannerList) {
+    private void setBannerEventPagerAdapter(List<BannerEvent> FeedBannerList) {
         bannerEventPagerAdapter = new BannerEventPagerAdapter(getContext(), FeedBannerList);
         bannerViewPager.setAdapter(bannerEventPagerAdapter);
 
@@ -115,8 +116,8 @@ public class FeedMainFragment extends Fragment {
 
         @Override
         public void run() {
-            if (getActivity()==null) return;
-          getActivity().runOnUiThread(new Runnable() {
+            if (getActivity() == null) return;
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
 
                 public void run() {
@@ -134,4 +135,4 @@ public class FeedMainFragment extends Fragment {
         }
     }
 
-    }
+}

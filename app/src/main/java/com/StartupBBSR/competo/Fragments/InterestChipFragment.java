@@ -1,7 +1,6 @@
 package com.StartupBBSR.competo.Fragments;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +12,14 @@ import com.StartupBBSR.competo.Models.UserModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentInterestChipBinding;
+import com.StartupBBSR.competo.databinding.MainActionBarBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,6 +62,8 @@ public class InterestChipFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentInterestChipBinding.inflate(getLayoutInflater(), container, false);
+
+
         chipGroup = binding.idChipGroup;
         View view = binding.getRoot();
 
@@ -85,9 +85,8 @@ public class InterestChipFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
-        String[] filters = {"Web Development", "Social Sciences", "Marketing",
-                "App Development", "UI/UX", "Coder", "Hackathon", "HR",
-                "Workshop", "Content Writing", "Video Editor", "Photo Editor"};
+        String[] filters = getResources().getStringArray(R.array.FilterChips);
+
 
         for (String filter : filters) {
             Chip chip = new Chip(getContext());
@@ -97,6 +96,13 @@ public class InterestChipFragment extends Fragment {
             chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.chip_background_color)));
             chipGroup.addView(chip);
         }
+
+        binding.tvChipFragmentGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_interestChipFragment_to_profileMainFragment);
+            }
+        });
 
         binding.btnFilterApplyChanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +122,7 @@ public class InterestChipFragment extends Fragment {
             }
         }
 
-        if (count <= 10 && count >= 3){
+        if (count <= 20 && count >= 3){
             selectedChips = new String[count];
             int index = 0;
             for (int i = 0; i < chipGroup.getChildCount(); i++) {

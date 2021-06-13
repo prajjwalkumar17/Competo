@@ -1,20 +1,12 @@
 package com.StartupBBSR.competo.Activity;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,11 +22,9 @@ import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityMainBinding;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,12 +33,22 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding activityMainBinding;
+
+    Menu menu;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -65,12 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Constant constant;
     private UserModel userModel;
 
-
     private static final String TAG = "test";
 
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
@@ -85,10 +86,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = activityMainBinding.bottomNavBar;
 
 
-        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        firestoreDB = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        userid = firebaseAuth.getUid();
+        constant = new Constant();
+        userModel = new UserModel();
+        documentReference = firestoreDB.collection(constant.getUsers()).document(userid);
+
+        getUserData();
+
+        navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.homeFragment:
                     fragment = new HomeFragment();
                     loadFragment(fragment);
@@ -109,18 +120,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loadFragment(fragment);
                     break;
             }
+
             return true;
 
         });
-
-        firestoreDB = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        userid = firebaseAuth.getUid();
-        constant = new Constant();
-        userModel = new UserModel();
-
-        documentReference =firestoreDB.collection(constant.getUsers()).document(userid);
-
 
         activityMainBinding.actionBar.drawerToggleIcon.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
@@ -135,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-
 //        Get Data when this activity starts
         getUserData();
     }
@@ -145,12 +147,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
+
+                if (error != null) {
                     Log.d(TAG, "onEvent: " + error.toString());
                     return;
                 }
 
-                if (value != null && value.exists()){
+                if (value != null && value.exists()) {
                     documentSnapshot = value;
                     saveDataToClass();
                     Log.d(TAG, "onEvent: " + value.getData());
@@ -172,13 +175,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userModel.setUserRole(documentSnapshot.getString(constant.getUserisUserField()));
         userModel.setOrganizerRole(documentSnapshot.getString(constant.getUserisOrganizerField()));
         userModel.setUserChips((List<String>) documentSnapshot.get(constant.getUserInterestedChipsField()));
+        userModel.setUserID(documentSnapshot.getString(constant.getUserIdField()));
 
         Log.d(TAG, "saveDataToClass: " + userModel.getUserChips());
 
-
+        checkRole();
         updateHeader();
-
     }
+
 
     private void loadFragment(Fragment fragment) {
         //switching fragment
@@ -191,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -199,6 +202,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             logout();
         else if (id == R.id.menu_settings)
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+        else if (id == R.id.menu_addEvent)
+            startActivity(new Intent(MainActivity.this, ManageEventActivity.class));
 
         return true;
     }
@@ -209,14 +214,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
 
+    private void checkRole() {
+        menu = navigationView.getMenu();
+        if (userModel.getOrganizerRole().equals("1"))
+            menu.findItem(R.id.menu_addEvent).setVisible(true);
+        else if (userModel.getUserRole().equals("1"))
+            menu.findItem(R.id.menu_addEvent).setVisible(false);
+    }
+
     private void updateHeader() {
         TextView tvname = header.findViewById(R.id.tvHeaderName);
+        TextView tvRole = header.findViewById(R.id.tvHeaderRole);
         ImageView ivprofile = header.findViewById(R.id.header_image);
         ImageView ivprofilebackground = header.findViewById(R.id.headerBackgroundImage);
+
         tvname.setText(userModel.getUserName());
+
+//        if (userModel.getUserChips() == null)
+//            tvBrief.setText("");
+//        else {
+//            String[] tempData = new String[3];
+//            for (int i = 0; i < 3; i++) {
+//                tempData[i] = userModel.getUserChips().get(i);
+//            }
+//
+//            tvBrief.setText(Arrays.toString(tempData).replaceAll("\\[|\\]", ""));
+//        }
+
+        if (userModel.getUserRole().equals("1"))
+            tvRole.setText("User");
+        else
+            tvRole.setText("Organizer");
+
         String imguri = userModel.getUserPhoto();
-        if (imguri != null){
+        if (imguri != null) {
+//            Clear image
             loadUsingGlide(imguri, ivprofile, 1, 1);
+//            Blurred Background
             loadUsingGlide(imguri, ivprofilebackground, 25, 5);
         }
     }

@@ -4,6 +4,17 @@ public class Constant {
     String users = "Users";
     String profilePictures = "ProfileImages";
 
+    String events = "Events";
+    String eventPosters = "EventPosters";
+
+    String MessageRequests = "MessageRequests";
+    String Chats = "Chats", Messages = "Messages", Requests = "Requests", ChatConnections = "ChatConnections";
+    String lastMessage = "LastMessage";
+
+    String eventOrganizerID = "eventOrganizerID";
+
+    String userIdField = "UserID";
+
     String userNameField = "Name";
     String userEmailField = "Email";
     String userPhoneField = "Phone";
@@ -64,5 +75,45 @@ public class Constant {
 
     public String getProfilePictures() {
         return profilePictures;
+    }
+
+    public String getUserIdField() {
+        return userIdField;
+    }
+
+    public String getEvents() {
+        return events;
+    }
+
+    public String getEventPosters() {
+        return eventPosters;
+    }
+
+    public String getEventOrganizerID() {
+        return eventOrganizerID;
+    }
+
+    public String getMessageRequests() {
+        return MessageRequests;
+    }
+
+    public String getChats() {
+        return Chats;
+    }
+
+    public String getMessages() {
+        return Messages;
+    }
+
+    public String getRequests() {
+        return Requests;
+    }
+
+    public String getChatConnections() {
+        return ChatConnections;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
     }
 }

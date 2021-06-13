@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_nav_graph"
+    app:startDestination="@id/eventMainFragment">
+
+    <fragment
+        android:id="@+id/eventMainFragment"
+        android:name="com.StartupBBSR.competo.Fragments.EventMainFragment"
+        android:label="fragment_event_main"
+        tools:layout="@layout/fragment_event_main" >
+        <action
+            android:id="@+id/action_eventMainFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/eventMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.StartupBBSR.competo.Fragments.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" />
+</navigation>

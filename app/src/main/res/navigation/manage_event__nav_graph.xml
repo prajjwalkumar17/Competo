@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/manage_event__nav_graph"
+    app:startDestination="@id/manageEventMainFragment">
+
+    <fragment
+        android:id="@+id/manageEventMainFragment"
+        android:name="com.StartupBBSR.competo.Fragments.ManageEventMainFragment"
+        android:label="fragment_manage_event_main"
+        tools:layout="@layout/fragment_manage_event_main" >
+        <action
+            android:id="@+id/action_manageEventMainFragment_to_addEventFragment"
+            app:destination="@id/addEventFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/manageEventMainFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="com.StartupBBSR.competo.Fragments.AddEventFragment"
+        android:label="fragment_add_event"
+        tools:layout="@layout/fragment_add_event" >
+        <action
+            android:id="@+id/action_addEventFragment_to_manageEventMainFragment"
+            app:destination="@id/manageEventMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/manageEventMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

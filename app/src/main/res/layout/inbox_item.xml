@@ -4,52 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_gradient"
-    android:padding="15dp"
+    android:padding="@dimen/grid_3x"
+    android:layout_margin="@dimen/grid_1x"
     tools:context=".Fragments.ConversationsFragment">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_conveProfile"
         android:layout_width="55dp"
         android:layout_height="46dp"
-        android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.002"
+        app:civ_border_color="@color/ui_light_blue"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_profile_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_conveUsername"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
-        android:text="Drishty jha"
-        android:textColor="#0B0A0A"
+        android:text="Name"
+        android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_conveProfile"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_conveLastMsg"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Tap to chat"
-        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/grid_1x"
+        android:fontFamily="sans-serif"
+        android:text="Last Message"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_conveProfile"
         app:layout_constraintTop_toBottomOf="@+id/tv_conveUsername" />
 
-    <TextView
-        android:id="@+id/msgTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="06:00 AM"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
