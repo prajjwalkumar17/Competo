@@ -239,7 +239,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="@dimen/grid_3x"
-                    android:layout_marginEnd="@dimen/grid_3x"
                     app:srcCompat="@drawable/ic_google_icon" />
 
                 <ImageView
@@ -247,6 +246,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginTop="@dimen/grid_3x"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/grid_3x"
                     app:srcCompat="@drawable/ic_facebook_icon"
                     tools:layout_editor_absoluteX="116dp"

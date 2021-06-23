@@ -316,10 +316,13 @@ public class LoginActivity extends AppCompatActivity {
                     userInfo.put(constant.getUserEmailField(), user.getEmail());
                     userInfo.put(constant.getUserBioField(), document.getString(constant.getUserBioField()));
                     userInfo.put(constant.getUserPhotoField(), document.getString(constant.getUserPhotoField()));
+                    userInfo.put(constant.getUserInterestedChipsField(), document.get(constant.getUserInterestedChipsField()));
                     userInfo.put(constant.getUserLinkedinField(), document.getString(constant.getUserLinkedinField()));
                     userInfo.put(constant.getUserPhoneField(), document.getString(constant.getUserPhoneField()));
                     userInfo.put(constant.getUserIdField(), document.getString(constant.getUserIdField()));
                     userInfo.put(constant.getLastMessage(), document.getString(constant.getLastMessage()));
+                    userInfo.put(constant.getUserMyEventField(), document.get(constant.getUserMyEventField()));
+
 
                 } else {
                     userInfo.put(constant.getUserNameField(), user.getDisplayName());
@@ -341,14 +344,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         documentReference.update(userInfo);
-
-//        if (temp_flag == 0) {
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//            finish();
-//        } else {
-//            startActivity(new Intent(getApplicationContext(), OrganizerActivity.class));
-//            finish();
-//        }
 
         if (temp_flag == 0)
             Toast.makeText(this, "User Mode", Toast.LENGTH_SHORT).show();

@@ -12,9 +12,9 @@
         android:title="Find"/>
 
     <item
-        android:id="@+id/wishlistFragment"
-        android:icon="@drawable/ic_baseline_favorite_border_24"
-        android:title="Wishlist"/>
+        android:id="@+id/teamFragment"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="Teams"/>
 
     <item
         android:id="@+id/profileFragment"

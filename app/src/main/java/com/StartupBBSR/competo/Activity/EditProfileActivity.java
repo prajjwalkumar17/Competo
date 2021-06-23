@@ -1,5 +1,6 @@
 package com.StartupBBSR.competo.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,6 +39,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -71,6 +74,7 @@ public class EditProfileActivity extends AppCompatActivity {
         userId = firebaseAuth.getUid();
 
         constant = new Constant();
+
 //        Get data from Main Activity via get Intent
         userModel = (UserModel) getIntent().getSerializableExtra(constant.getUserModelObject());
 
@@ -94,6 +98,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditProfileActivity.super.onBackPressed();
+            }
+        });
+
+
+        activityEditProfileBinding.btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteProfile();
             }
         });
 
@@ -255,6 +267,61 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void deleteProfile() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
+        builder.setTitle("Delete profile");
+        builder.setMessage("Are you sure you want to delete this profile?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                activityEditProfileBinding.uploadingProgressBar.setVisibility(View.VISIBLE);
+                activityEditProfileBinding.btnSaveProfile.setVisibility(View.GONE);
+
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            firebaseDB.collection(constant.getUsers()).document(userId)
+                                    .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(EditProfileActivity.this, "Account deleted", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(EditProfileActivity.this, "Process Failed:\nlogout and try again", Toast.LENGTH_SHORT).show();
+                                    activityEditProfileBinding.uploadingProgressBar.setVisibility(View.GONE);
+                                    activityEditProfileBinding.btnSaveProfile.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditProfileActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        activityEditProfileBinding.uploadingProgressBar.setVisibility(View.GONE);
+                        activityEditProfileBinding.btnSaveProfile.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 

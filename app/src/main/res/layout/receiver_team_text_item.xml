@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/grid_2x"
+    android:background="@drawable/receiver_text_bg"
+    android:maxWidth="300dp"
+    android:maxHeight="350dp"
+    android:minHeight="30dp"
+    android:padding="@dimen/grid_1x">
+
+    <TextView
+        android:id="@+id/tv_sender_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Sender Name"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_receiver_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1x"
+        android:layout_marginEnd="@dimen/grid_1x"
+        android:layout_marginBottom="@dimen/grid_1x"
+        android:autoLink="all"
+        android:inputType="textNoSuggestions|textMultiLine|textLongMessage|textAutoCorrect|textAutoComplete|textCapSentences"
+        android:maxWidth="270dp"
+        android:minWidth="50dp"
+        android:text="Received Message"
+        app:layout_constraintBottom_toTopOf="@+id/tv_receiver_text_time"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/tv_sender_name" />
+
+    <TextView
+        android:id="@+id/tv_receiver_text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_1x"
+        android:fontFamily="sans-serif-condensed"
+        android:text="12:36 PM"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/grid_3x" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

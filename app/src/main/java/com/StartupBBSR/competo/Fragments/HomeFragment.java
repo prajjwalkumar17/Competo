@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+
     // tab titles
     private String[] homeTabTitles = new String[]{"Feed", "Events", "Event Pal", "Inbox"};
 

@@ -96,15 +96,10 @@ public class EventPalFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         snapHelper.attachToRecyclerView(recyclerView);
-//        EventPalUserAdapter adapter = new EventPalUserAdapter(getContext(), mUserDataSet, mSkillDataSet);
+
+
         adapter = new EventPalUserAdapter(getContext(), options);
         adapter.setOnItemClickListener(new EventPalUserAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-//                Toast.makeText(getContext(), "Item Click: " + mUserDataSet.get(position).getName(), Toast.LENGTH_SHORT).show();
-                TextView name = itemView.findViewById(R.id.tvEventPalUserName);
-                Toast.makeText(getContext(), "Item Click: " + name.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
 
             @Override
             public void onButtonClick(DocumentSnapshot snapshot) {

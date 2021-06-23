@@ -303,6 +303,7 @@ public class SignUpActivity extends AppCompatActivity {
         userInfo.put(constant.getUserLinkedinField(), null);
         userInfo.put(constant.getUserInterestedChipsField(), null);
         userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
+        userInfo.put(constant.getUserMyEventField(), null);
 
 //        Not sure if this would be useful
         userInfo.put(constant.getLastMessage(), null);
@@ -321,7 +322,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
 //                Update connection to null
                 CollectionReference connectionRef = firebaseDB.collection(constant.getChatConnections());
-                connectionRef.document(firebaseAuth.getUid()).set(new ChatConnectionModel(null));
+                connectionRef.document(firebaseAuth.getUid()).set(new ChatConnectionModel(null, null));
             }
         });
 
@@ -369,6 +370,7 @@ public class SignUpActivity extends AppCompatActivity {
                     userInfo.put(constant.getUserLinkedinField(), null);
                     userInfo.put(constant.getUserInterestedChipsField(), null);
                     userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
+                    userInfo.put(constant.getUserMyEventField(), null);
 
 //                    Not sure if this would be useful
                     userInfo.put(constant.getLastMessage(), null);
@@ -388,7 +390,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
 //                Update connection to null
                             CollectionReference connectionRef = firebaseDB.collection(constant.getChatConnections());
-                            connectionRef.document(firebaseAuth.getUid()).set(new ChatConnectionModel(null));
+                            connectionRef.document(firebaseAuth.getUid()).set(new ChatConnectionModel(null, null));
                         }
                     });
 

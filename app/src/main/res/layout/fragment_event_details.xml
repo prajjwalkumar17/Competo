@@ -9,17 +9,71 @@
     app:layoutDescription="@xml/fragment_event_details_scene"
     tools:context=".Fragments.EventDetailsFragment">
 
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_2x"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/grid_1x"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/btnEventRegister"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_2x"
+            android:layout_weight="1"
+            android:background="@drawable/eventpal_button_round"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnEventFindPal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_2x"
+            android:layout_weight="1"
+            android:background="@drawable/eventpal_button_round"
+            android:text="Find a TeamMate"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnAddToMyEvents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_2x"
+            android:layout_weight="1"
+            android:background="@drawable/eventpal_button_round"
+            android:text="Add to my events"
+            android:textAllCaps="false"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView3">
+
         <LinearLayout
             android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_3x"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:orientation="vertical"
-            android:padding="@dimen/grid_2x"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView3">
+            android:padding="@dimen/grid_2x">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,15 +151,15 @@
 
                 <TextView
                     android:id="@+id/tvEventDescription"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/grid_1x"
                     android:background="@drawable/rounded_tv_background"
                     android:backgroundTint="@color/main_accent_2"
-                    style="@style/TextAppearance.AppCompat.Small"
                     android:maxHeight="135dp"
-                    android:minHeight="100dp"
                     android:maxLength="500"
+                    android:minHeight="100dp"
                     android:padding="@dimen/grid_2x"
                     android:text="This is example of a long description. This is used to test how some descriptions of events can possibly look like"
                     android:textColor="@color/white" />
@@ -123,44 +177,16 @@
                 android:paddingBottom="@dimen/grid_2x"
                 tools:listitem="@layout/interest_chip_item" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/grid_2x"
-                android:orientation="horizontal"
-                android:padding="@dimen/grid_3x"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/btnEventRegister"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/grid_2x"
-                    android:layout_weight="1"
-                    android:background="@drawable/eventpal_button_round"
-                    android:text="Register"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/btnEventFindPal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/grid_2x"
-                    android:layout_weight="1"
-                    android:background="@drawable/eventpal_button_round"
-                    android:text="Find a TeamMate"
-                    android:textAllCaps="false" />
-            </LinearLayout>
-
         </LinearLayout>
+    </ScrollView>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginStart="@dimen/grid_3x"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="@dimen/grid_3x"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"

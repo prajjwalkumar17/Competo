@@ -23,5 +23,22 @@
         android:id="@+id/eventDetailsFragment"
         android:name="com.StartupBBSR.competo.Fragments.EventDetailsFragment"
         android:label="fragment_event_details"
-        tools:layout="@layout/fragment_event_details" />
+        tools:layout="@layout/fragment_event_details" >
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_eventMainFragment"
+            app:destination="@id/eventMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/eventMainFragment" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_eventPalFragment"
+            app:destination="@id/eventPalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventPalFragment"
+        android:name="com.StartupBBSR.competo.Fragments.EventPalFragment"
+        android:label="fragment_event_pal"
+        tools:layout="@layout/fragment_event_pal" />
 </navigation>

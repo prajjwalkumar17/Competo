@@ -39,7 +39,8 @@
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
-        android:text="Go Back"
+
+        android:text="Select Profile Tags"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

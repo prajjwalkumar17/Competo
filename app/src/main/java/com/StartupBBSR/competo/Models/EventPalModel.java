@@ -9,12 +9,22 @@ public class EventPalModel {
     private List<String> Chips;
     private String UserID;
     private String lastMessage;
+    private boolean selected;
 
     public EventPalModel() {
     }
 
     public EventPalModel(String name, String bio, String photo, List<String> chips, String lastMessage) {
         Name = name;
+        Bio = bio;
+        Photo = photo;
+        Chips = chips;
+        this.lastMessage = lastMessage;
+    }
+
+    public EventPalModel(String name, String id, String bio, String photo, List<String> chips, String lastMessage) {
+        Name = name;
+        UserID = id;
         Bio = bio;
         Photo = photo;
         Chips = chips;
@@ -43,5 +53,13 @@ public class EventPalModel {
 
     public String getLastMessage() {
         return lastMessage;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
+    public Boolean isSelected() {
+        return selected;
     }
 }

@@ -16,13 +16,12 @@ import android.widget.Toast;
 import com.StartupBBSR.competo.Fragments.FindFragment;
 import com.StartupBBSR.competo.Fragments.HomeFragment;
 import com.StartupBBSR.competo.Fragments.ProfileFragment;
-import com.StartupBBSR.competo.Fragments.WishlistFragment;
+import com.StartupBBSR.competo.Fragments.TeamFragment;
 import com.StartupBBSR.competo.Models.UserModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityMainBinding;
 import com.bumptech.glide.Glide;
-
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -32,7 +31,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
 
 import java.util.List;
 
@@ -68,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "test";
 
     private Fragment fragment;
+    private TeamFragment teamFragment;
+    private HomeFragment homeFragment;
+    private FindFragment findFragment;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +97,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getUserData();
 
+        homeFragment = new HomeFragment();
+        findFragment = new FindFragment();
+        teamFragment = new TeamFragment();
+        profileFragment = new ProfileFragment();
+
         navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -106,23 +114,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
 
                 case R.id.findFragment:
-                    fragment = new FindFragment();
+                    fragment = findFragment;
                     loadFragment(fragment);
                     break;
 
-                case R.id.wishlistFragment:
-                    fragment = new WishlistFragment();
+                case R.id.teamFragment:
+                    fragment = teamFragment;
                     loadFragment(fragment);
                     break;
 
                 case R.id.profileFragment:
-                    fragment = new ProfileFragment();
+                    fragment = profileFragment;
                     loadFragment(fragment);
                     break;
             }
-
             return true;
-
         });
 
         activityMainBinding.actionBar.drawerToggleIcon.setOnClickListener(new View.OnClickListener() {
@@ -163,9 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void saveDataToClass() {
-
         getIntent().putExtra(constant.getUserModelObject(), userModel);
-
         userModel.setUserName(documentSnapshot.getString(constant.getUserNameField()));
         userModel.setUserEmail(documentSnapshot.getString(constant.getUserEmailField()));
         userModel.setUserPhoto(documentSnapshot.getString(constant.getUserPhotoField()));
@@ -229,17 +233,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ImageView ivprofilebackground = header.findViewById(R.id.headerBackgroundImage);
 
         tvname.setText(userModel.getUserName());
-
-//        if (userModel.getUserChips() == null)
-//            tvBrief.setText("");
-//        else {
-//            String[] tempData = new String[3];
-//            for (int i = 0; i < 3; i++) {
-//                tempData[i] = userModel.getUserChips().get(i);
-//            }
-//
-//            tvBrief.setText(Arrays.toString(tempData).replaceAll("\\[|\\]", ""));
-//        }
 
         if (userModel.getUserRole().equals("1"))
             tvRole.setText("User");

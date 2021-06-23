@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.ChatAdapter;
 import com.StartupBBSR.competo.Models.MessageModel;

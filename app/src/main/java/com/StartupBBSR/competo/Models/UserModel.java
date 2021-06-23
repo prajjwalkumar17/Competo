@@ -10,8 +10,11 @@ public class UserModel implements Serializable {
     String userRole, organizerRole;
     String userID;
     List<String> userChips;
+    List<String> userEvents;
 
     private String lastMessage;
+
+    private Boolean selected;
 
     public UserModel() {
     }
@@ -116,5 +119,22 @@ public class UserModel implements Serializable {
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+
+    public List<String> getUserEvents() {
+        return userEvents;
+    }
+
+    public void setUserEvents(List<String> userEvents) {
+        this.userEvents = userEvents;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
+    public Boolean isSelected() {
+        return selected;
     }
 }

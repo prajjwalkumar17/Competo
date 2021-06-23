@@ -1,6 +1,7 @@
 package com.StartupBBSR.competo.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<MessageModel, Recycler
     private SenderTextItemBinding senderTextItemBinding;
 
     private Context context;
+    private FirestoreRecyclerOptions<MessageModel> options;
 
     private int SENDER_VIEW_TYPE = 1, RECEIVER_VIEW_TYPE = 2;
 
@@ -32,6 +34,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<MessageModel, Recycler
     public ChatAdapter(@NonNull FirestoreRecyclerOptions<MessageModel> options, Context context) {
         super(options);
         this.context = context;
+        this.options = options;
     }
 
 
@@ -62,7 +65,6 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<MessageModel, Recycler
             receiverTextItemBinding.tvReceiverTextTime.setText(simpleDateFormat
                     .format(new Date(Long.parseLong(model.getTimestamp().toString()))));
         }
-
     }
 
     @Override

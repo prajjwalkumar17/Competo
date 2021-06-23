@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/grid_2x">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_cardview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="@dimen/grid_2x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_accent_1"
+            android:padding="@dimen/grid_2x">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/teamImage"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:layout_marginStart="@dimen/grid_2x"
+                android:layout_marginBottom="@dimen/grid_2x"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/teamName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/teamImage"
+                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:layout_margin="@dimen/grid_2x"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:fontFamily="sans-serif"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

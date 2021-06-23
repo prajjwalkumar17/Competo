@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_accent_1"
-    tools:context=".Activity.ChatDetailActivity">
+    tools:context=".Activity.TeamChatDetailActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -14,29 +14,44 @@
         android:layout_height="?actionBarSize"
         android:backgroundTint="@color/main_background"
         android:elevation="@dimen/grid_2x"
+        android:theme="@style/teamToolbarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/team_chat_menu">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/chat_user_name"
+                android:id="@+id/team_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Name"
+                android:text="Team Name"
+                android:layout_marginTop="@dimen/grid_1x"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/chat_user_image"
+                app:layout_constraintStart_toEndOf="@+id/team_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/team_creator_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="@dimen/grid_1x"
+                android:text="Team Admin"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/team_image"
+                app:layout_constraintTop_toBottomOf="@id/team_name" />
+
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/chat_user_image"
+                android:id="@+id/team_image"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/ic_baseline_person_24"
@@ -90,11 +105,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRecyclerView"
+        android:id="@+id/teamChatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/grid_1x"

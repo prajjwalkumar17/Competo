@@ -5,16 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.StartupBBSR.competo.R;
+import com.StartupBBSR.competo.databinding.FragmentTeamBinding;
 
 import androidx.fragment.app.Fragment;
 
-public class WishlistFragment extends Fragment {
+public class TeamFragment extends Fragment {
 
-
-    public WishlistFragment() {
-        // Required empty public constructor
-    }
+    private FragmentTeamBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +21,9 @@ public class WishlistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wishlist, container, false);
+        binding = FragmentTeamBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        return view;
     }
 }

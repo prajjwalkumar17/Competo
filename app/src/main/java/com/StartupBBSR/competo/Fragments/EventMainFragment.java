@@ -91,6 +91,10 @@ public class EventMainFragment extends Fragment {
     private void initData() {
         Query query = collectionReference.whereNotEqualTo("eventStatus", "Draft").orderBy("eventStatus");
 
+
+        //        Query query = collectionReference.orderBy("Name").whereArrayContains("Chips", "Coder");
+//        Query query1 = collectionReference.whereArrayContainsAny("eventTags", )
+
         options = new FirestoreRecyclerOptions.Builder<EventModel>()
                 .setQuery(query, EventModel.class)
                 .build();

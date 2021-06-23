@@ -16,18 +16,13 @@
         android:label="Find"
         tools:layout="@layout/fragment_find" />
     <fragment
-        android:id="@+id/wishlistFragment"
-        android:name="com.StartupBBSR.competo.Fragments.WishlistFragment"
-        android:label="Wishlist"
-        tools:layout="@layout/fragment_wishlist" />
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.StartupBBSR.competo.Fragments.ProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/inboxFragment"
-        android:name="com.StartupBBSR.competo.Fragments.InboxFragment"
-        android:label="@string/inbox"
-        tools:layout="@layout/fragment_inbox" />
+        android:id="@+id/teamFragment"
+        android:name="com.StartupBBSR.competo.Fragments.WishlistFragment"
+        android:label="fragment_team"
+        tools:layout="@layout/fragment_team" />
 </navigation>

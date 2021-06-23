@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/team_nav_graph"
+    app:startDestination="@id/teamMainFragment">
+
+    <fragment
+        android:id="@+id/teamMainFragment"
+        android:name="com.StartupBBSR.competo.Fragments.TeamMainFragment"
+        android:label="fragment_team_main"
+        tools:layout="@layout/fragment_team_main" >
+        <action
+            android:id="@+id/action_teamMainFragment_to_createTeamFragment"
+            app:destination="@id/createTeamFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/teamMainFragment" />
+        <action
+            android:id="@+id/action_teamMainFragment_to_teamChatDetailActivity"
+            app:destination="@id/teamChatDetailActivity"
+            app:popUpTo="@id/teamMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTeamFragment"
+        android:name="com.StartupBBSR.competo.Fragments.CreateTeamFragment"
+        android:label="fragment_create_team"
+        tools:layout="@layout/fragment_create_team" >
+        <action
+            android:id="@+id/action_createTeamFragment_to_teamMainFragment"
+            app:destination="@id/teamMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/teamChatDetailActivity"
+        android:name="com.StartupBBSR.competo.Activity.TeamChatDetailActivity"
+        android:label="activity_team_chat_detail"
+        tools:layout="@layout/activity_team_chat_detail" />
+</navigation>

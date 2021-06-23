@@ -39,7 +39,7 @@ public class ProfileMainFragment extends Fragment {
 
     private FragmentProfileMainBinding binding;
     // tab titles
-    private String[] profileTabTitles = new String[]{"About", "My Events", "Interests", "Updates"};
+    private String[] profileTabTitles = new String[]{"About", "Wishlist", "Interests", "Updates"};
 
     private List<String> mDataSet;
 
@@ -89,14 +89,15 @@ public class ProfileMainFragment extends Fragment {
         init();
         initDataSet();
 
-        RecyclerView recyclerView = binding.interestChipRecyclerView;
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
-        InterestChipAdapter adapter = new InterestChipAdapter(mDataSet);
-        recyclerView.setAdapter(adapter);
-
         if (userModel.getUserChips() == null)
             binding.profileBrief.setText("");
         else {
+            RecyclerView recyclerView = binding.interestChipRecyclerView;
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+            InterestChipAdapter adapter = new InterestChipAdapter(mDataSet);
+            recyclerView.setAdapter(adapter);
+
+
             String[] tempData = new String[3];
             for (int i = 0; i < 3; i++) {
                 tempData[i] = userModel.getUserChips().get(i);
@@ -175,6 +176,7 @@ public class ProfileMainFragment extends Fragment {
     private void initDataSet() {
         if (userModel.getUserChips() != null)
             mDataSet = userModel.getUserChips();
+
 //        Log.d("chips", "initDataSet: " + Arrays.asList(mDataSet));
     }
 

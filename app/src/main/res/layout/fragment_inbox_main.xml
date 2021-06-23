@@ -7,28 +7,55 @@
     android:background="@color/main_background"
     tools:context=".Fragments.InboxMainFragment">
 
-   <TextView
-       android:id="@+id/tvMessageRequest"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Message Requests"
-       android:textSize="16sp"
-       android:textColor="@color/ui_light_blue"
-       android:visibility="gone"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/tvMessageRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_2x"
+        android:layout_marginEnd="@dimen/grid_2x"
+        android:text="Message Requests"
+        android:textColor="@color/ui_light_blue"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/chatListRecyclerView"
-       android:layout_width="0dp"
-       android:layout_height="0dp"
-       tools:listitem="@layout/inbox_item"
-       android:layout_marginTop="@dimen/grid_1x"
-       android:layout_marginStart="@dimen/grid_2x"
-       android:layout_marginEnd="@dimen/grid_2x"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/tvMessageRequest" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/grid_3x"
+        android:background="@color/white"
+        android:elevation="0dp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMessageRequest">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_2x"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:fontFamily="sans-serif"
+            android:gravity="start"
+            android:text="Inbox"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/grid_3x"
+            android:paddingTop="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_2x"
+            tools:listitem="@layout/inbox_item" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

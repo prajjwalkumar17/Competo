@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Competo">
         <activity android:name=".Activity.ChatDetailActivity"></activity>
+        <activity android:name=".Activity.TeamChatDetailActivity"></activity>
         <activity
             android:name=".Activity.ManageEventActivity"
             android:windowSoftInputMode="adjustResize" />
