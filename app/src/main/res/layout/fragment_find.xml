@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FindFragment">
+    tools:context=".Activity.FindActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <EditText
+        android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Find Fragment"
-        android:gravity="center"
-        android:textColor="@color/white"/>
+        android:layout_height="40dp"
+        android:layout_margin="12dp"
+        android:inputType="textAutoComplete"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:hint="search here"
+        android:textColor="@color/white"
+        android:background="@drawable/search_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/result_list" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_list"
+        android:layout_width="match_parent"
+        android:layout_height="561dp"
+        android:layout_below="@+id/search_field"
+        android:layout_marginTop="80dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

@@ -27,6 +27,21 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
 
     public OnItemClickListener listener;
 
+    public EventFragmentAdapter(FirestoreRecyclerOptions<EventModel> options,OnItemClickListener listener) {
+        super(options);
+        this.listener = listener;
+    }
+
+    public EventFragmentAdapter(Context context, FirestoreRecyclerOptions<EventModel> options) {
+        super(options);
+        this.listener= null ;
+
+    }
+
+    private static Context getContext(Context context) {
+        return context;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot snapshot);
     }
@@ -35,7 +50,7 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
         this.listener = listener;
     }
 
-    public EventFragmentAdapter(Context context, @NonNull FirestoreRecyclerOptions<EventModel> options) {
+    public EventFragmentAdapter(@NonNull FirestoreRecyclerOptions<EventModel> options) {
         super(options);
         this.context = context;
     }
