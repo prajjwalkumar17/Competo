@@ -10,6 +10,7 @@
 
     <color name="dark_grey">#777777</color>
     <color name="transparent_grey">#70CCCCCC</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="shadow_color">#cadddddd</color>
 
     <color name="blue">#00B8D4</color>

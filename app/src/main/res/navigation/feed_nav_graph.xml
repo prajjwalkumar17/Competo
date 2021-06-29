@@ -9,5 +9,29 @@
         android:id="@+id/feedMainFragment"
         android:name="com.StartupBBSR.competo.Fragments.FeedMainFragment"
         android:label="fragment_feed_main"
-        tools:layout="@layout/fragment_feed_main" />
+        tools:layout="@layout/fragment_feed_main" >
+        <action
+            android:id="@+id/action_feedMainFragment_to_eventDetailsFragment4"
+            app:destination="@id/eventDetailsFragment4"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/feedMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment4"
+        android:name="com.StartupBBSR.competo.Fragments.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <action
+            android:id="@+id/action_eventDetailsFragment4_to_feedMainFragment"
+            app:destination="@id/feedMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/feedMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

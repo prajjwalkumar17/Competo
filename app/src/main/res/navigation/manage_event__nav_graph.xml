@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/manage_event__nav_graph"
     app:startDestination="@id/manageEventMainFragment">
-
     <fragment
         android:id="@+id/manageEventMainFragment"
         android:name="com.StartupBBSR.competo.Fragments.ManageEventMainFragment"
@@ -17,7 +16,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/manageEventMainFragment"/>
+            app:popUpTo="@id/manageEventMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEventFragment"

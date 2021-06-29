@@ -27,4 +27,9 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false);
     }
+
+    public void onFindTeamMate() {
+        HomeFragment homeFragment = (HomeFragment) getParentFragment();
+        homeFragment.findTeamMate();
+    }
 }

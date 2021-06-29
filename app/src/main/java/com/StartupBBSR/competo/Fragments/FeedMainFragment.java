@@ -5,35 +5,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.StartupBBSR.competo.Adapters.BannerEventPagerAdapter;
-import com.StartupBBSR.competo.Adapters.VerticalRecyclerViewAdapter;
-import com.StartupBBSR.competo.Models.BannerEvent;
-import com.StartupBBSR.competo.Models.HorizontalModel;
-import com.StartupBBSR.competo.Models.VerticalModel;
+import com.StartupBBSR.competo.Adapters.EventFragmentAdapter;
+import com.StartupBBSR.competo.Models.EventModel;
 import com.StartupBBSR.competo.R;
+import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentFeedMainBinding;
-import com.google.android.material.tabs.TabLayout;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Date;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
+import androidx.viewpager2.widget.ViewPager2;
 
 
 public class FeedMainFragment extends Fragment {
-    FragmentFeedMainBinding binding;
-    BannerEventPagerAdapter bannerEventPagerAdapter;
-    TabLayout indicatorTab;
-    ViewPager bannerViewPager;
-    List<BannerEvent> FeedBannerList;
-    RecyclerView verticalRecycleView;
-    VerticalRecyclerViewAdapter adapter;
-    ArrayList<VerticalModel> arrayListVertical;
+    private FragmentFeedMainBinding binding;
+    private EventFragmentAdapter adapter;
+
+    private FirebaseFirestore firestoreDB;
+    private NavController navController;
+
+    private Constant constant;
+    private CollectionReference collectionReference;
+    private FirestoreRecyclerOptions<EventModel> options;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,95 +52,80 @@ public class FeedMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         binding = FragmentFeedMainBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //VerticalRecyclerView
-        arrayListVertical = new ArrayList<>();
-        verticalRecycleView = view.findViewById(R.id.recyclerView);
-        verticalRecycleView.setHasFixedSize(true);
-        verticalRecycleView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        firestoreDB = FirebaseFirestore.getInstance();
+        constant = new Constant();
+        collectionReference = firestoreDB.collection(constant.getEvents());
 
-        adapter = new VerticalRecyclerViewAdapter(getContext(), arrayListVertical);
-        verticalRecycleView.setAdapter(adapter);
-        setData();
+        initData();
 
-        bannerViewPager = view.findViewById(R.id.banner_viewPager1);
-        indicatorTab = view.findViewById(R.id.tab_indicator1);
-
-        FeedBannerList = new ArrayList<>();
-        FeedBannerList.add(new BannerEvent(1, "SGWOMENS MONTH", "https://media.glassdoor.com/l/90/f1/7b/b8/company-event.jpg", ""));
-        FeedBannerList.add(new BannerEvent(2, "SGWOMEN MONTH", "https://image.shutterstock.com/image-vector/womens-history-month-annual-that-600w-1328422742.jpg", ""));
-        FeedBannerList.add(new BannerEvent(3, "SGWOME MONTH", "https://media.glassdoor.com/l/90/f1/7b/b8/company-event.jpg", ""));
-        FeedBannerList.add(new BannerEvent(4, "SGWOM MONTH", "https://media.glassdoor.com/l/90/f1/7b/b8/company-event.jpg", ""));
-        FeedBannerList.add(new BannerEvent(5, "SGWO MONTH", "https://media.glassdoor.com/l/90/f1/7b/b8/company-event.jpg", ""));
-        FeedBannerList.add(new BannerEvent(6, "SGW MONTH", "https://media.glassdoor.com/l/90/f1/7b/b8/company-event.jpg", ""));
-
-
-        setBannerEventPagerAdapter(FeedBannerList);
-
+        binding.tvViewAllUpcomingEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
+                FeedFragment feedFragment = (FeedFragment) navHostFragment.getParentFragment();
+                feedFragment.onClickViewAllEvents();
+            }
+        });
 
         return view;
     }
 
-    private void setData() {
-        for (int i = 1; i <= 5; i++) {
-            VerticalModel mVerticalModel = new VerticalModel();
+    private void initData() {
+        Query query = collectionReference.orderBy("eventDateStamp")
+                .whereGreaterThanOrEqualTo("eventDateStamp", new Date().getTime())
+                .limit(6);
 
-            mVerticalModel.setTitle("Title" + i);
+        options = new FirestoreRecyclerOptions.Builder<EventModel>()
+                .setQuery(query, EventModel.class)
+                .build();
 
-            ArrayList<HorizontalModel> arrayList = new ArrayList<>();
+        initRecycler();
+    }
 
-            for (int j = 0; j <= 5; j++) {
+    private void initRecycler() {
 
-                HorizontalModel mHorizontalModel = new HorizontalModel();
-                mHorizontalModel.setDescription("Description" + j);
-                mHorizontalModel.setName("Name" + j);
-                arrayList.add(mHorizontalModel);
+        binding.unpcomingEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.unpcomingEventsRecyclerView.setHasFixedSize(true);
+        adapter = new EventFragmentAdapter(getContext(), options);
 
+        adapter.setOnItemClickListener(new EventFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot snapshot) {
+                EventModel model = snapshot.toObject(EventModel.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("eventDetails", model);
+                bundle.putString("from", "feed");
+                navController.navigate(R.id.action_feedMainFragment_to_eventDetailsFragment4, bundle);
             }
-            mVerticalModel.setArrayList(arrayList);
-            arrayListVertical.add(mVerticalModel);
-        }
+        });
 
-        adapter.notifyDataSetChanged();
+        binding.unpcomingEventsRecyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
-    private void setBannerEventPagerAdapter(List<BannerEvent> FeedBannerList) {
-        bannerEventPagerAdapter = new BannerEventPagerAdapter(getContext(), FeedBannerList);
-        bannerViewPager.setAdapter(bannerEventPagerAdapter);
-
-        indicatorTab.setupWithViewPager(bannerViewPager);
-
-        Timer sliderTimer = new Timer();
-        sliderTimer.scheduleAtFixedRate(new AutoSlide(), 4000, 6000);
-        indicatorTab.setupWithViewPager(bannerViewPager, true);
-
-    }
-
-    class AutoSlide extends TimerTask {
-
-        @Override
-        public void run() {
-            if (getActivity() == null) return;
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-
-                public void run() {
-
-                    if (bannerViewPager.getCurrentItem() < FeedBannerList.size() - 1) {
-                        bannerViewPager.setCurrentItem(bannerViewPager.getCurrentItem() + 1);
-                    } else {
-                        bannerViewPager.setCurrentItem(0);
-                    }
-
-                }
-
-            });
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (adapter != null) {
+            adapter.startListening();
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(getActivity(), R.id.fragment_feed);
+    }
 }

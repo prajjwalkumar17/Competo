@@ -4,8 +4,10 @@ public class Constant {
     String users = "Users";
     String profilePictures = "ProfileImages";
 
+    String draftEvents = "Draft Events";
     String events = "Events";
     String eventPosters = "EventPosters";
+    String eventDate = "eventDate";
 
     String MessageRequests = "MessageRequests";
     String Chats = "Chats", Messages = "Messages", Requests = "Requests", ChatConnections = "ChatConnections";
@@ -89,6 +91,10 @@ public class Constant {
 
     public String getEvents() {
         return events;
+    }
+
+    public String getDraftEvents() {
+        return draftEvents;
     }
 
     public String getEventPosters() {

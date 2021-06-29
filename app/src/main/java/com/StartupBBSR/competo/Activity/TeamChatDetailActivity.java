@@ -1,6 +1,7 @@
 package com.StartupBBSR.competo.Activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,12 +20,14 @@ import com.StartupBBSR.competo.databinding.ViewmembersAlertLayoutBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -155,7 +158,7 @@ public class TeamChatDetailActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.exitTeam:
-                        Toast.makeText(TeamChatDetailActivity.this, "Exit", Toast.LENGTH_SHORT).show();
+                        exitTeam();
                         return true;
 
                     case 1:
@@ -212,6 +215,47 @@ public class TeamChatDetailActivity extends AppCompatActivity {
         memberNameListAdapter.notifyDataSetChanged();
         builder.setView(view);
         builder.show();
+    }
+
+    private void exitTeam() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(TeamChatDetailActivity.this);
+        builder.setTitle("Exit Team");
+        builder.setMessage("Are you sure to exit the team?\n-You will not be able to access or read previous messages");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DocumentReference connectionRef = firestoreDB.collection(constant.getChatConnections()).document(userID);
+
+                connectionRef.update(constant.getTeamConnections(), FieldValue.arrayRemove(teamID))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                DocumentReference teamRef = firestoreDB.collection(constant.getTeams()).document(teamID);
+                                teamRef.update(constant.getTeamMemberField(), FieldValue.arrayRemove(userID))
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(TeamChatDetailActivity.this, "Exit Successful", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(TeamChatDetailActivity.this, "Exit Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
+
+
     }
 
     @Override

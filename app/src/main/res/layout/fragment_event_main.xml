@@ -25,6 +25,7 @@
         android:layout_marginStart="@dimen/grid_3x"
         android:layout_marginTop="@dimen/grid_3x"
         android:layout_marginEnd="@dimen/grid_3x"
+        app:queryBackground="@color/transparent"
         android:background="@drawable/btn_search_round"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toStartOf="@+id/btnEventFilter"

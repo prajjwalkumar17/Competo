@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -39,7 +40,7 @@ public class ProfileMainFragment extends Fragment {
 
     private FragmentProfileMainBinding binding;
     // tab titles
-    private String[] profileTabTitles = new String[]{"About", "Wishlist", "Interests", "Updates"};
+    private String[] profileTabTitles = new String[]{"About", "Wishlist", "Updates"};
 
     private List<String> mDataSet;
 
@@ -195,8 +196,6 @@ public class ProfileMainFragment extends Fragment {
                 case 1:
                     return new ProfileMyeventsFragment();
                 case 2:
-                    return new ProfileInterestsFragment();
-                case 3:
                     return new ProfileUpdatesFragment();
             }
             return new ProfileAboutFragment();

@@ -1,8 +1,9 @@
 package com.StartupBBSR.competo.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EventPalModel {
+public class EventPalModel implements Serializable {
     private String Name;
     private String Bio;
     private String Photo;

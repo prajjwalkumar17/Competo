@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.EventActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.EventFragment">
 
-
-
-    <EditText
-        android:id="@+id/EventsearchBox"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="12dp"
-        android:inputType="textAutoComplete"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:hint="search here"
-        android:textColor="@color/white"
-        android:background="@drawable/search_layout"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_events"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/result_list" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/event_nav_graph" />
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/result_list"
-        android:layout_width="match_parent"
-        android:layout_height="561dp"
-        android:layout_below="@+id/search_field"
-        android:layout_marginTop="80dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

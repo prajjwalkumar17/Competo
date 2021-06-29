@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/find_nav_graph"
+    app:startDestination="@id/findMainFragment">
+    <fragment
+        android:id="@+id/findMainFragment"
+        android:name="com.StartupBBSR.competo.Fragments.FindMainFragment"
+        android:label="fragment_find_main"
+        tools:layout="@layout/fragment_find_main" >
+        <action
+            android:id="@+id/action_findMainFragment_to_eventDetailsFragment3"
+            app:destination="@id/eventDetailsFragment3"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/findMainFragment" />
+        <action
+            android:id="@+id/action_findMainFragment_to_eventPalFragment2"
+            app:destination="@id/eventPalFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/findMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment3"
+        android:name="com.StartupBBSR.competo.Fragments.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <action
+            android:id="@+id/action_eventDetailsFragment3_to_findMainFragment"
+            app:destination="@id/findMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/findMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventPalFragment2"
+        android:name="com.StartupBBSR.competo.Fragments.EventPalFragment"
+        android:label="fragment_event_pal"
+        tools:layout="@layout/fragment_event_pal" >
+        <action
+            android:id="@+id/action_eventPalFragment2_to_findMainFragment"
+            app:destination="@id/findMainFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/findMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

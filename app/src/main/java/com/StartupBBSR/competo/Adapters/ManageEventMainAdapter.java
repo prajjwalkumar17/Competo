@@ -1,7 +1,6 @@
 package com.StartupBBSR.competo.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.StartupBBSR.competo.Models.EventModel;
-import com.StartupBBSR.competo.R;
-import com.StartupBBSR.competo.databinding.FragmentManageEventMainBinding;
 import com.StartupBBSR.competo.databinding.ManageEventMainItemBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,7 +32,7 @@ public class ManageEventMainAdapter extends FirestoreRecyclerAdapter<EventModel,
     private List<EventModel> localItems;
     private Context context;
 
-//    For snackbar undo
+    //    For snackbar undo
     private DocumentReference documentReference;
     private EventModel eventModel;
 
@@ -66,12 +64,24 @@ public class ManageEventMainAdapter extends FirestoreRecyclerAdapter<EventModel,
 
     @Override
     protected void onBindViewHolder(@NonNull ManageEventMainAdapter.ViewHolder holder, int position, @NonNull EventModel model) {
+
+        SimpleDateFormat simpleEventDateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+        SimpleDateFormat simpleEventTimeFormat = new SimpleDateFormat("KK:mm a", Locale.US);
+        String eventDate = "", eventTime = "";
+
+        if (model.getEventDateStamp() != null)
+            eventDate = simpleEventDateFormat.format(new Date(Long.parseLong(model.getEventDateStamp().toString())));
+
+        if (model.getEventTimeStamp() != null)
+            eventTime = simpleEventTimeFormat.format(new Date(Long.parseLong(model.getEventTimeStamp().toString())));
+
         holder.title.setText(model.getEventTitle());
         holder.description.setText(model.getEventDescription());
         holder.venue.setText(model.getEventVenue());
-        holder.date.setText(model.getEventDate());
-        holder.time.setText(model.getEventTime());
-        holder.status.setText(model.getEventStatus());
+        /*holder.date.setText(model.getEventDate());
+        holder.time.setText(model.getEventTime());*/
+        holder.date.setText(eventDate);
+        holder.time.setText(eventTime);
         Glide.with(context).load(model.getEventPoster()).into(holder.image);
 //
         boolean isExpanded = model.isExpanded();
@@ -81,7 +91,7 @@ public class ManageEventMainAdapter extends FirestoreRecyclerAdapter<EventModel,
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView image, btnEditEvent;
-        private TextView title, description, venue, date, time, status;
+        private TextView title, description, venue, date, time;
 
         private ConstraintLayout expandableLayout;
 
@@ -93,7 +103,6 @@ public class ManageEventMainAdapter extends FirestoreRecyclerAdapter<EventModel,
             venue = binding.tvEventVenue;
             date = binding.tvEventDate;
             time = binding.tvEventTime;
-            status = binding.tvEventStatus;
             btnEditEvent = binding.btnEditEvent;
             expandableLayout = binding.expandableLayout;
 

@@ -39,22 +39,29 @@
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
-
         android:text="Select Profile Tags"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/id_chipGroup"
-        style="@style/CustomChipStyle"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/grid_3x"
         app:layout_constraintBottom_toTopOf="@+id/btnFilterApplyChanges"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/grid_1x"
+        android:layout_margin="@dimen/grid_2x"
         app:layout_constraintTop_toBottomOf="@+id/tvChipFragmentGoBack">
 
-    </com.google.android.material.chip.ChipGroup>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/id_chipGroup"
+            style="@style/CustomChipStyle"
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/grid_3x"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/grid_3x"/>
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

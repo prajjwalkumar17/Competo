@@ -8,14 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.StartupBBSR.competo.Models.EventModel;
-import com.StartupBBSR.competo.Models.FragmentEventModel;
 import com.StartupBBSR.competo.databinding.EventFragmentItemBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,22 +26,11 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
     private EventFragmentItemBinding binding;
     private Context context;
 
+
+    private SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.US);
+    private SimpleDateFormat monthFormat = new SimpleDateFormat("MMM", Locale.US);
+
     public OnItemClickListener listener;
-
-    public EventFragmentAdapter(FirestoreRecyclerOptions<EventModel> options,OnItemClickListener listener) {
-        super(options);
-        this.listener = listener;
-    }
-
-    public EventFragmentAdapter(Context context, FirestoreRecyclerOptions<EventModel> options) {
-        super(options);
-        this.listener= null ;
-
-    }
-
-    private static Context getContext(Context context) {
-        return context;
-    }
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot snapshot);
@@ -50,7 +40,7 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
         this.listener = listener;
     }
 
-    public EventFragmentAdapter(@NonNull FirestoreRecyclerOptions<EventModel> options) {
+    public EventFragmentAdapter(Context context, @NonNull FirestoreRecyclerOptions<EventModel> options) {
         super(options);
         this.context = context;
     }
@@ -64,15 +54,23 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EventModel model) {
-        String date = model.getEventDate();
-        holder.day.setText(date.substring(0,2));
-        holder.month.setText(date.substring(3,6));
+//        String date = model.getEventDate();
+
+        String day = "", month = "";
+
+        if (model.getEventDateStamp() != null) {
+            day = dayFormat.format(new Date(Long.parseLong(model.getEventDateStamp().toString())));
+            month = monthFormat.format(new Date(Long.parseLong(model.getEventDateStamp().toString())));
+        }
+
+        holder.day.setText(day);
+        holder.month.setText(month);
         holder.title.setText(model.getEventTitle());
         Glide.with(context).load(model.getEventPoster()).into(holder.image);
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, day, month;
         ImageView image;
@@ -99,12 +97,6 @@ public class EventFragmentAdapter extends FirestoreRecyclerAdapter<EventModel, E
                 }
             });
         }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-
 
     }
 }

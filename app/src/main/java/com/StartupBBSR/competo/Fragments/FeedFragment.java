@@ -21,6 +21,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class FeedFragment extends Fragment {
 
@@ -40,6 +41,18 @@ public class FeedFragment extends Fragment {
 
         return view;
     }
+
+    public void onClickViewAllEvents() {
+        HomeFragment homeFragment = (HomeFragment) getParentFragment();
+        homeFragment.viewAllEvents();
+    }
+
+    public void findTeamMate() {
+        HomeFragment homeFragment = (HomeFragment) getParentFragment();
+        homeFragment.findTeamMate();
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

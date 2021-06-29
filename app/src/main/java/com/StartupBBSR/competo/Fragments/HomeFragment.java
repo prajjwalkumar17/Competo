@@ -1,34 +1,24 @@
 package com.StartupBBSR.competo.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.StartupBBSR.competo.Models.UserModel;
-import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+
+    private ViewPager2 viewPager2;
+    private int flag = 0;
 
 
     // tab titles
@@ -37,6 +27,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            if (getArguments().getString("ft").equals("teamMate")) {
+                flag = 1;
+            }
+        }
     }
 
     @Override
@@ -47,20 +42,34 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        viewPager2 = binding.homeViewpager;
+
         init();
+
+        if (flag == 1) {
+            findTeamMate();
+        }
         return view;
     }
 
 
-    private void init() {
-        binding.homeViewpager.setAdapter(new HomeViewPagerFragmentAdapter(this));
-        binding.homeViewpager.setUserInputEnabled(false);
+    public void init() {
+        viewPager2.setAdapter(new HomeViewPagerFragmentAdapter(this));
+        viewPager2.setUserInputEnabled(false);
 
 //        Attaching tab mediator
         new TabLayoutMediator(binding.tabLayout2,
                 binding.homeViewpager, ((tab, position) ->
                 tab.setText(homeTabTitles[position])
         )).attach();
+    }
+
+    public void viewAllEvents() {
+        viewPager2.setCurrentItem(1, true);
+    }
+
+    public void findTeamMate() {
+        viewPager2.setCurrentItem(2, true);
     }
 
 

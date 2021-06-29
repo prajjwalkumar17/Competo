@@ -41,6 +41,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -90,8 +91,10 @@ public class AddEventFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private String organizerID;
 
+    private Long eventDateStamp, eventTimeStamp;
+
     private EventModel eventModel;
-    private String eventid;
+    private String liveEventid, draftEventid, eventid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +114,6 @@ public class AddEventFragment extends Fragment {
         organizerID = firebaseAuth.getUid();
 
         constant = new Constant();
-
         calendar = Calendar.getInstance();
 
 
@@ -171,8 +173,8 @@ public class AddEventFragment extends Fragment {
 
         binding.recyclerViewTags.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewTags.setHasFixedSize(true);
-//        binding.recyclerViewTags.addItemDecoration(
-//                new DividerItemDecoration(binding.recyclerViewTags.getContext(), LinearLayoutManager.VERTICAL));
+
+        binding.ivPoster.setClipToOutline(true);
 
         adapter = new TagRecyclerAdapter(tagDataSet);
         adapter.setOnTagClickListener(new TagRecyclerAdapter.OnTagClickListener() {
@@ -216,7 +218,6 @@ public class AddEventFragment extends Fragment {
                         newChips.add(tag);
                     }
                 }
-
 
                 adapter = new TagRecyclerAdapter(newChips);
                 adapter.setOnTagClickListener(new TagRecyclerAdapter.OnTagClickListener() {
@@ -269,7 +270,7 @@ public class AddEventFragment extends Fragment {
         navController = Navigation.findNavController(view);
 
         binding.switchStatus.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b){
+            if (b) {
                 binding.tvStatus.setText("Upload as live");
                 binding.btnUploadEvent.setText("Upload Event");
                 statusFlag = 1;
@@ -282,8 +283,8 @@ public class AddEventFragment extends Fragment {
 
 
         if ((EventModel) getArguments().getSerializable("editEvent") != null) {
-            eventModel = (EventModel) getArguments().getSerializable("editEvent");
 //            Edit Event
+            eventModel = (EventModel) getArguments().getSerializable("editEvent");
             flag = 1;
             binding.btnUploadEvent.setText("Save Changes");
             binding.topAppBar.setTitle("Edit Event");
@@ -300,7 +301,16 @@ public class AddEventFragment extends Fragment {
             binding.TimeET.setText(eventModel.getEventTime());
             binding.linkET.setText(eventModel.getEventLink());
 
-            eventid = eventModel.getEventID();
+            liveEventid = eventModel.getEventID();
+            draftEventid = eventModel.getEventID();
+
+            /*if (getArguments().getSerializable("sourceFragment").equals("Live")) {
+
+            }
+            else {
+                liveEventid = eventModel.getEventID();
+                draftEventid = eventModel.getEventID();
+            }*/
 
             List<String> tags = eventModel.getEventTags();
             for (int i = 0; i < tags.size(); i++) {
@@ -319,16 +329,8 @@ public class AddEventFragment extends Fragment {
                 tagChipGroup.setVisibility(View.VISIBLE);
             }
 
-
             imageString = eventModel.getEventPoster();
             loadUsingGlide(imageString);
-
-
-            // TODO: 5/26/2021 image already containing download uri. Skipping this part 
-//            loadUsingGlide(eventImageUri.toString());
-//            eventImageUri = Uri.parse(eventModel.getEventPoster());
-//            binding.ivPosterProgressBar.setVisibility(View.VISIBLE);
-
 
         }
 
@@ -344,7 +346,7 @@ public class AddEventFragment extends Fragment {
                 checkEmptyField(binding.linkET, binding.linkTIL);
 
                 if (emptyFlag == 6) {
-                    if (eventImageUri == null && imageString != null){
+                    if (eventImageUri == null && imageString != null) {
                         imageFlag = 1;
                         uploadEvent();
                     } else {
@@ -416,7 +418,6 @@ public class AddEventFragment extends Fragment {
 
         } else {
             uploadEvent();
-
         }
     }
 
@@ -434,14 +435,16 @@ public class AddEventFragment extends Fragment {
         String time = binding.TimeET.getText().toString();
         String link = binding.linkET.getText().toString();
         List<String> eventTags = new ArrayList<>();
-        String status;
+
+        Long dateStamp = eventDateStamp;
+        Long timeStamp = eventTimeStamp;
 
         for (int i = 0; i < binding.tagsChipGroup.getChildCount(); ++i) {
             Chip chip = (Chip) binding.tagsChipGroup.getChildAt(i);
             eventTags.add(chip.getText().toString());
         }
 
-        if (imageFlag == 0){
+        if (imageFlag == 0) {
             if (eventImageDownloadUri != null) {
                 image = eventImageDownloadUri.toString();
             } else {
@@ -452,40 +455,86 @@ public class AddEventFragment extends Fragment {
         }
 
 
-
-        CollectionReference collectionReference = firestoreDB.collection(constant.getEvents());
+        CollectionReference eventLivecollectionReference = firestoreDB.collection(constant.getEvents());
+        CollectionReference eventDraftCollectionReference = firestoreDB.collection(constant.getDraftEvents());
 
         if (flag == 0) {
 //        New Event. New id
 //        Generate random id to use set else if id not needed we could directly use add()
-            eventid = collectionReference.document().getId();
+            liveEventid = eventLivecollectionReference.document().getId();
+            draftEventid = eventDraftCollectionReference.document().getId();
         }
 
         if (statusFlag == 0) {
-            status = "Draft";
-        } else {
-            status = "Live";
-        }
+//            Save as draft
+//        EventModel eventModel = new EventModel(image, title, description, venue, date, time, link, eventTags, organizerID, draftEventid);
+            EventModel eventModel = new EventModel(image, title, description, venue, dateStamp, timeStamp, link, eventTags, organizerID, draftEventid);
 
-        EventModel eventModel = new EventModel(image, title, description, venue, date, time, link, eventTags, organizerID, eventid, status);
+            eventDraftCollectionReference.document(draftEventid).set(eventModel)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getContext(), "Event Uploaded", Toast.LENGTH_SHORT).show();
+                            binding.btnUploadEvent.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            navController.navigate(R.id.action_addEventFragment_to_manageEventMainFragment);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Upload failed:\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    binding.btnUploadEvent.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+            });
 
-        collectionReference.document(eventid).set(eventModel)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "Event Uploaded", Toast.LENGTH_SHORT).show();
-                        binding.btnUploadEvent.setVisibility(View.VISIBLE);
-                        binding.progressBar.setVisibility(View.GONE);
-                        navController.navigate(R.id.action_addEventFragment_to_manageEventMainFragment);
+//        If saving as draft, if document exists in live, delete it
+            eventLivecollectionReference.document(draftEventid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        eventLivecollectionReference.document(draftEventid).delete();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Upload failed:\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                binding.btnUploadEvent.setVisibility(View.VISIBLE);
-                binding.progressBar.setVisibility(View.GONE);
-            }
-        });
+                }
+            });
+
+        } else {
+//            Save as live
+//            EventModel eventModel = new EventModel(image, title, description, venue, date, time, link, eventTags, organizerID, liveEventid);
+
+            EventModel eventModel = new EventModel(image, title, description, venue, dateStamp, timeStamp, link, eventTags, organizerID, liveEventid);
+
+            eventLivecollectionReference.document(liveEventid).set(eventModel)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getContext(), "Event Uploaded", Toast.LENGTH_SHORT).show();
+                            binding.btnUploadEvent.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            navController.navigate(R.id.action_addEventFragment_to_manageEventMainFragment);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Upload failed:\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    binding.btnUploadEvent.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+            });
+
+
+            //        If saving as live, if document exists in draft, delete it
+            eventDraftCollectionReference.document(liveEventid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        eventDraftCollectionReference.document(liveEventid).delete();
+                    }
+                }
+            });
+
+
+        }
 
     }
 
@@ -504,14 +553,14 @@ public class AddEventFragment extends Fragment {
     private void updateDateLabel() {
         String myDateFormat = "dd-MMM-yy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myDateFormat, Locale.US);
-
+        eventDateStamp = calendar.getTimeInMillis();
         binding.DateET.setText(simpleDateFormat.format(calendar.getTime()));
     }
 
     private void updateTimeLabel() {
         String myTimeFormat = "hh:mm a";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myTimeFormat, Locale.US);
-
+        eventTimeStamp = calendar.getTimeInMillis();
         binding.TimeET.setText(simpleDateFormat.format(calendar.getTime()));
     }
 

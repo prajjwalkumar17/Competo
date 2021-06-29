@@ -15,7 +15,6 @@
             android:name=".Activity.ManageEventActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".Activity.EditProfileActivity" />
-        <activity android:name=".Activity.ProfileActivity" />
         <activity
             android:name=".Activity.OnboardingActivity"
             android:screenOrientation="portrait" />
@@ -33,9 +32,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

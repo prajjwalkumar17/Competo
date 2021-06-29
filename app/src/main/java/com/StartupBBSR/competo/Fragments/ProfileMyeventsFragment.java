@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.MyEventAdapter;
 import com.StartupBBSR.competo.Models.EventModel;
+import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentProfileMyeventsBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -19,13 +19,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,8 @@ public class ProfileMyeventsFragment extends Fragment {
 
     private MyEventAdapter adapter;
     private FirestoreRecyclerOptions<EventModel> options;
+
+    private NavController navController;
 
     List<String> myEvents = new ArrayList<>();
 
@@ -72,8 +76,6 @@ public class ProfileMyeventsFragment extends Fragment {
                     myEvents = (List<String>) documentSnapshot.get(constant.getUserMyEventField());
                     if (myEvents != null && myEvents.size() != 0) {
                         initData();
-                    } else {
-                        Toast.makeText(getContext(), "No Events", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -96,6 +98,18 @@ public class ProfileMyeventsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         adapter = new MyEventAdapter(options, getContext());
+
+        adapter.setOnClickListener(new MyEventAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot snapshot) {
+                EventModel eventModel = snapshot.toObject(EventModel.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("eventDetails", eventModel);
+                bundle.putString("from", "myevent");
+                navController.navigate(R.id.action_profileMainFragment_to_eventDetailsFragment2, bundle);
+            }
+        });
+
         adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
@@ -115,5 +129,11 @@ public class ProfileMyeventsFragment extends Fragment {
         if (adapter != null) {
             adapter.stopListening();
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(getParentFragment().getView());
     }
 }

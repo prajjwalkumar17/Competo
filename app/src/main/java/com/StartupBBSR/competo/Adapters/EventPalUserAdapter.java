@@ -51,8 +51,6 @@ public class EventPalUserAdapter extends FirestoreRecyclerAdapter<EventPalModel,
     //    Listener Interface
     public interface OnItemClickListener {
 
-        void onItemClick(View itemView, int position);
-
         void onButtonClick(DocumentSnapshot snapshot);
 
         void onBottomSheetToggleClick(View itemView, int position);
@@ -108,18 +106,6 @@ public class EventPalUserAdapter extends FirestoreRecyclerAdapter<EventPalModel,
             recyclerView = binding.eventPalUserSkillRecyclerView;
             btnSendMessageRequestEventPal = binding.btnSendMessage;
 
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(itemView, position);
-                        }
-                    }
-                }
-            });
 
             binding.btnBottomSheet.setOnClickListener(new View.OnClickListener() {
                 @Override

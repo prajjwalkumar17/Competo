@@ -47,11 +47,6 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Interests" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Updates" />
 
             </com.google.android.material.tabs.TabLayout>
@@ -130,9 +125,8 @@
             android:layout_marginTop="6dp"
             android:fontFamily="sans-serif-condensed"
             android:paddingStart="@dimen/grid_3x"
-            android:text=""
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,6 +141,7 @@
             android:src="@drawable/linkedin_logo"
             app:civ_border_color="@color/ui_blue"
             app:civ_border_width="0.5dp"
+            android:layout_marginTop="@dimen/grid_2x"
             app:civ_circle_background_color="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/image_rel_layout"
             app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
