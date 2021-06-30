@@ -51,6 +51,8 @@ public class EventPalUserAdapter extends FirestoreRecyclerAdapter<EventPalModel,
     //    Listener Interface
     public interface OnItemClickListener {
 
+        void onItemClick(View itemView, int position);
+
         void onButtonClick(DocumentSnapshot snapshot);
 
         void onBottomSheetToggleClick(View itemView, int position);

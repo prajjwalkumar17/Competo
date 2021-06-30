@@ -208,6 +208,6 @@ public class ManageDraftEventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        Nav controller won't work if not initialised in OnViewCreated
-        navController = Navigation.findNavController(getActivity(), R.id.eventManageMainNavHostFragment);
+//        navController = Navigation.findNavController(getActivity(), R.id.eventManageMainNavHostFragment);
     }
 }

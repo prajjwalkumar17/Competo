@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/teamFragment"
-        android:name="com.StartupBBSR.competo.Fragments.WishlistFragment"
+        android:name="com.StartupBBSR.competo.Fragments.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" />
 </navigation>

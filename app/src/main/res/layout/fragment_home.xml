@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/main_background"
+    android:background="@color/main_accent_1"
     tools:context=".Fragments.HomeFragment">
 
     <com.google.android.material.tabs.TabLayout
@@ -12,11 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_background"
+        android:fadeScrollbars="true"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabTextAppearance="@style/ProfileCustomTabText"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"
         app:tabTextColor="@color/white">
 
         <com.google.android.material.tabs.TabItem

@@ -31,12 +31,12 @@
 
             <LinearLayout
                 android:alpha="0.9"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/grid_2x"
-                android:layout_marginEnd="@dimen/grid_2x"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/grid_1x"
+                android:layout_marginEnd="@dimen/grid_1x"
                 android:background="@drawable/imageview_background_round"
-                android:elevation="@dimen/grid_2x"
+                android:elevation="@dimen/grid_1x"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,16 +68,16 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_marginTop="@dimen/grid_2x"
         android:id="@+id/tvTitle"
-        android:layout_width="160dp"
-        android:textColor="@color/white"
-        android:paddingBottom="@dimen/grid_2x"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:maxLines="2"
-        android:ellipsize="end"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1x"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Iron Man"/>
+        android:maxLines="2"
+        android:paddingBottom="@dimen/grid_1x"
+        android:text="Iron Man"
+        android:textColor="@color/white" />
 
 </LinearLayout>

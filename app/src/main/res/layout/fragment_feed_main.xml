@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/grid_4x"
-            android:layout_marginTop="@dimen/grid_2x"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif"
             android:text="Event Pal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +30,9 @@
             android:id="@+id/cvPoster"
             android:layout_width="0dp"
             android:layout_height="300dp"
-            android:layout_marginStart="@dimen/grid_4x"
-            android:layout_marginTop="@dimen/grid_3x"
-            android:layout_marginEnd="@dimen/grid_4x"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_1x"
+            android:layout_marginEnd="@dimen/grid_3x"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +52,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/grid_4x"
+            android:layout_marginTop="24dp"
             android:fontFamily="sans-serif"
             android:text="Featured"
-            android:layout_marginTop="@dimen/grid_4x"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,14 +65,14 @@
             android:id="@+id/cvFeatured"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginTop="@dimen/grid_3x"
-            android:layout_marginStart="@dimen/grid_4x"
-            android:layout_marginEnd="@dimen/grid_4x"
+            android:layout_marginStart="@dimen/grid_3x"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/grid_3x"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvFeatured" >
-
+            app:layout_constraintTop_toBottomOf="@+id/tvFeatured">
 
 
         </androidx.cardview.widget.CardView>
@@ -81,13 +81,13 @@
             android:id="@+id/tvUpcomingEvents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif"
             android:text="Upcoming Events"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/grid_4x"
-            android:layout_marginStart="@dimen/grid_4x"
-            android:fontFamily="sans-serif"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cvFeatured" />
 
@@ -97,6 +97,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-medium"
             android:text="View all"
+            android:textStyle="bold"
             android:textColor="@color/ui_light_blue"
             app:layout_constraintBottom_toBottomOf="@+id/tvUpcomingEvents"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,16 +108,15 @@
             android:id="@+id/unpcomingEventsRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/grid_3x"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/grid_1x"
             android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUpcomingEvents"
             tools:itemCount="10"
-            tools:listitem="@layout/event_fragment_item"
-            app:layout_constraintTop_toBottomOf="@+id/tvUpcomingEvents" />
-
-
+            tools:listitem="@layout/event_fragment_item" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
