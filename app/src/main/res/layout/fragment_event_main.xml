@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/btnEventFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/grid_4x"
+        android:layout_height="@dimen/grid_4x"
         android:layout_marginEnd="@dimen/grid_3x"
         android:contentDescription="Filter Events"
-        android:src="@drawable/ic_baseline_filter_list_24"
+        android:src="@drawable/ic_filter_icon"
+        app:tint = "@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/searchView" />

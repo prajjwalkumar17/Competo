@@ -48,11 +48,11 @@
                 <ImageView
                     android:id="@+id/btnBottomSheet"
                     android:layout_width="60dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginBottom="8dp"
                     android:contentDescription="User Profile"
                     android:paddingTop="@dimen/grid_1x"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                    android:src="@drawable/ic_upperarrow"
                     app:layout_constraintBottom_toTopOf="@+id/tvEventPalUserName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -84,6 +84,7 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     android:text="Satyajit Mishra"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/black"

@@ -83,9 +83,7 @@
             android:id="@+id/btnSendChat"
             android:layout_width="40dp"
             android:layout_height="45dp"
-            android:rotation="45"
-            android:src="@drawable/send"
-            app:civ_circle_background_color="@color/white"
+            android:src="@drawable/ic_sendbutton_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

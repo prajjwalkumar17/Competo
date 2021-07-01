@@ -112,7 +112,7 @@ public class CreateTeamFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!binding.etTeamName.getText().toString().equals("")) {
-                    if (adapter.getSelected().size() > 1) {
+                    if (adapter.getSelected().size() >= 2) {
                         ArrayList<EventPalModel> selectedUsers = adapter.getSelected();
                         selectedUserIds = new ArrayList<>();
                         for (EventPalModel model: selectedUsers) {
