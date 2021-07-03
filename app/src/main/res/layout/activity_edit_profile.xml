@@ -7,30 +7,16 @@
     android:background="@color/main_background"
     tools:context=".Activity.EditProfileActivity">
 
-    <TextView
-        android:id="@+id/tvEditProfileBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="18sp"
-        android:text="Edit Profile"
-        android:textColor="@color/white"
-        app:drawableLeftCompat="@drawable/ic_baseline_keyboard_arrow_left_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/grid_2x"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/grid_3x"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveProfile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProfileBack"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProfileBack">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,14 +31,61 @@
                 android:backgroundTint="@color/white"
                 android:ems="10"
                 android:hint="Enter Name"
-                android:inputType="textPersonName|textMultiLine"
                 android:imeOptions="actionNext"
+                android:inputType="textPersonName|textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect"
                 android:maxLines="2"
                 android:textColor="#FFFFFF"
                 android:textColorHint="@color/accent_gray"
                 app:layout_constraintBottom_toBottomOf="@+id/image_rel_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_rel_layout" />
+
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/accent_gray"
+                android:ems="10"
+                android:hint="Enter Phone Number"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+            <EditText
+                android:id="@+id/etLinkedIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/accent_gray"
+                android:hint="Enter LinkedIn Address"
+                android:imeOptions="actionDone"
+                android:inputType="textUri"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+            <ProgressBar
+                android:id="@+id/uploadingProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/grid_4x"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <RelativeLayout
                 android:id="@+id/image_rel_layout"
@@ -71,6 +104,14 @@
                     android:layout_alignBottom="@id/profile_image"
                     android:src="@drawable/ic_baseline_photo_camera_24" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="100dp"
@@ -79,14 +120,6 @@
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="1dp"
                     app:civ_circle_background_color="@color/white" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:visibility="gone"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
 
             </RelativeLayout>
@@ -117,67 +150,18 @@
                 app:layout_constraintBottom_toTopOf="@+id/etName"
                 app:layout_constraintStart_toEndOf="@+id/image_rel_layout" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/BioTIL"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="16dp"
-                android:maxHeight="150dp"
-                app:hintEnabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/BioTV"
-                    android:gravity="start"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/edit_text_border"
-                    android:hint="Enter Bio"
-                    android:maxLines="15"
-                    android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
-                    android:maxLength="200"
-                    android:maxHeight="150dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/accent_gray" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Phone"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:layout_marginTop="24dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/BioTIL" />
-
-            <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:backgroundTint="@color/accent_gray"
-                android:hint="Enter Phone Number"
-                android:textColorHint="@color/text_gray"
-                android:textColor="@color/white"
-                android:imeOptions="actionNext"
-                android:inputType="phone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -192,83 +176,104 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
-            <EditText
-                android:id="@+id/etLinkedIn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/accent_gray"
-                android:hint="Enter LinkedIn Address"
-                android:imeOptions="actionDone"
-                android:maxLines="1"
-                android:inputType="textUri"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView19" />
-
-            <Button
-                android:id="@+id/btnSaveProfile"
-                android:layout_width="@dimen/standard_width"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/grid_4x"
-                android:text="Save Changes"
-                android:background="@drawable/button_round_shape"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/uploadingProgressBar"
-                style="?android:attr/progressBarStyle"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/grid_4x"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <View
                 android:id="@+id/view2"
                 android:layout_width="0dp"
                 android:layout_height="0.5dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="@dimen/grid_2x"
                 android:background="@color/accent_gray"
-                android:layout_marginBottom="@dimen/grid_3x"
-                app:layout_constraintBottom_toTopOf="@+id/btnDeleteProfile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDeleteProfile"
-                style="?attr/materialButtonOutlinedStyle"
-                app:strokeWidth="1dp"
-                app:strokeColor="#DD2C00"
-                android:layout_width="@dimen/standard_width"
-                android:layout_height="wrap_content"
-                app:rippleColor="#8DDD2C00"
-                android:text="Delete Profile"
-                android:textAllCaps="false"
-                android:textColor="#DD2C00"
-                android:layout_marginBottom="@dimen/grid_3x"
-                app:layout_constraintBottom_toTopOf="@+id/view1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etLinkedIn" />
 
             <View
                 android:id="@+id/view1"
                 android:layout_width="0dp"
                 android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:layout_marginBottom="@dimen/grid_3x"
                 android:background="@color/accent_gray"
-                android:layout_marginBottom="@dimen/grid_4x"
-                app:layout_constraintBottom_toTopOf="@+id/btnSaveProfile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnDeleteProfile" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDeleteProfile"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="@dimen/standard_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:text="Delete Profile"
+                android:textAllCaps="false"
+                android:textColor="#DD2C00"
+                app:layout_constraintBottom_toTopOf="@+id/view1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view2"
+                app:rippleColor="#8DDD2C00"
+                app:strokeColor="#DD2C00"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/BioTIL"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:maxHeight="150dp"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/BioTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_border"
+                    android:gravity="start"
+                    android:hint="Enter Bio"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine|textAutoCorrect|textAutoComplete|textCapSentences|textNoSuggestions"
+                    android:maxHeight="150dp"
+                    android:maxLength="200"
+                    android:maxLines="15"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/accent_gray" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="@dimen/standard_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_3x"
+        android:background="@drawable/button_round_shape"
+        android:text="Save Changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEditProfileBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Edit Profile"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:drawableLeftCompat="@drawable/ic_baseline_keyboard_arrow_left_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

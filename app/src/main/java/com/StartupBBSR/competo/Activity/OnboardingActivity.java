@@ -1,6 +1,7 @@
 package com.StartupBBSR.competo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.OnboardingAdapter;
 import com.StartupBBSR.competo.Models.OnboardingModel;
@@ -40,11 +42,6 @@ public class OnboardingActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-//        In case we need to make it full screen
-        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
-
 
 //        If this activity has already been opened
         if (receivedPrefData()) {
@@ -58,9 +55,9 @@ public class OnboardingActivity extends AppCompatActivity {
 
 //        Fill list
         List<OnboardingModel> onboardingModelList = new ArrayList<>();
-        onboardingModelList.add(new OnboardingModel("Fresh Food", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", R.drawable.cover_image));
-        onboardingModelList.add(new OnboardingModel("Fast Delivery", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", R.drawable.iron_man));
-        onboardingModelList.add(new OnboardingModel("Easy Payment", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", R.drawable.latte));
+        onboardingModelList.add(new OnboardingModel("Find your team", "Find the right people for your team from our diverse community", R.drawable.g_3));
+        onboardingModelList.add(new OnboardingModel("Find your event", "Our events section allows you to choose from a plethora of events that are displayed according to your choice", R.drawable.g_2));
+        onboardingModelList.add(new OnboardingModel("Connect with team", "A secure chat feature so that you have conversations both individualy and as a group directly on our platform", R.drawable.g_1));
 
 
 //        Set adapter
@@ -107,6 +104,18 @@ public class OnboardingActivity extends AppCompatActivity {
                     binding.btnOnboardingGetstarted.setVisibility(View.VISIBLE);
                     binding.btnOnboardingGetstarted.setAnimation(getstartedbtnAnim);
                 }
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        binding.onboardingCV.setBackgroundTintList(ContextCompat.getColorStateList(OnboardingActivity.this, R.color.onboarding_blue));
+                        break;
+                    case 1:
+                        binding.onboardingCV.setBackgroundTintList(ContextCompat.getColorStateList(OnboardingActivity.this, R.color.onboarding_pink));
+                        break;
+                    case 2:
+                        binding.onboardingCV.setBackgroundTintList(ContextCompat.getColorStateList(OnboardingActivity.this, R.color.onboarding_green));
+                        break;
+                }
             }
 
             @Override
@@ -119,8 +128,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private boolean receivedPrefData() {

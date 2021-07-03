@@ -20,7 +20,6 @@
         android:fontFamily="sans-serif-medium"
         android:textStyle="bold"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +34,7 @@
         android:inputType="textNoSuggestions|textMultiLine|textLongMessage|textAutoCorrect|textAutoComplete|textCapSentences"
         android:maxWidth="270dp"
         android:minWidth="50dp"
-        android:text="Received Message"
+        android:text="Hi"
         app:layout_constraintBottom_toTopOf="@+id/tv_receiver_text_time"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/tv_sender_name" />

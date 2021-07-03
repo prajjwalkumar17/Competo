@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.StartupBBSR.competo.Listeners.addOnTextChangeListener;
+import com.StartupBBSR.competo.Models.ChatConnectionModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityLoginBinding;
@@ -37,6 +38,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -71,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
     //    Facebook
     private CallbackManager mCallbackManager;
     private static String TAG = "fbdebug";
+
+    public static final String dTAG = "account";
 
     private String m_mail = "";
     DocumentSnapshot document;
@@ -267,7 +271,6 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 Log.d("googlesignin: ", "Google Sign In failed\n" + e.getMessage());
-                ;
             }
         }
 
@@ -278,6 +281,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -304,9 +308,16 @@ public class LoginActivity extends AppCompatActivity {
             Log.d(TAG, "loginWithCredential: Role: User");
         }
 
+        String id = firebaseAuth.getCurrentUser().getUid();
+        if (id != null) {
+            Log.d(dTAG, "loginWithCredential exists: " + id);
+        } else {
+            Log.d(dTAG, "loginWithCredential: " + id);
+        }
+
 //        To add user to database if not done
         DocumentReference documentReference = firebaseDB.collection("Users")
-                .document(firebaseAuth.getCurrentUser().getUid());
+                .document(id);
 
         Map<String, Object> userInfo = new HashMap<>();
 
@@ -315,46 +326,79 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     document = task.getResult();
-                    userInfo.put(constant.getUserNameField(), user.getDisplayName());
-                    userInfo.put(constant.getUserEmailField(), user.getEmail());
-                    userInfo.put(constant.getUserBioField(), document.getString(constant.getUserBioField()));
-                    userInfo.put(constant.getUserPhotoField(), document.getString(constant.getUserPhotoField()));
-                    userInfo.put(constant.getUserInterestedChipsField(), document.get(constant.getUserInterestedChipsField()));
-                    userInfo.put(constant.getUserLinkedinField(), document.getString(constant.getUserLinkedinField()));
-                    userInfo.put(constant.getUserPhoneField(), document.getString(constant.getUserPhoneField()));
-                    userInfo.put(constant.getUserIdField(), document.getString(constant.getUserIdField()));
-                    userInfo.put(constant.getLastMessage(), document.getString(constant.getLastMessage()));
-                    userInfo.put(constant.getUserMyEventField(), document.get(constant.getUserMyEventField()));
+                    if (document.exists()) {
+//                        Account exists
+                        Log.d(dTAG, "onComplete: exists");
+                        userInfo.put(constant.getUserNameField(), user.getDisplayName());
+                        userInfo.put(constant.getUserEmailField(), user.getEmail());
+                        userInfo.put(constant.getUserBioField(), document.getString(constant.getUserBioField()));
+                        userInfo.put(constant.getUserPhotoField(), document.getString(constant.getUserPhotoField()));
+                        userInfo.put(constant.getUserInterestedChipsField(), document.get(constant.getUserInterestedChipsField()));
+                        userInfo.put(constant.getUserLinkedinField(), document.getString(constant.getUserLinkedinField()));
+                        userInfo.put(constant.getUserPhoneField(), document.getString(constant.getUserPhoneField()));
+                        userInfo.put(constant.getUserIdField(), document.getString(constant.getUserIdField()));
+                        userInfo.put(constant.getUserMyEventField(), document.get(constant.getUserMyEventField()));
+                        Log.d(dTAG, "onComplete: " + userInfo.toString());
+
+                        //        Now we check the role selected
+                        if (temp_flag == 0) {
+                            userInfo.put(constant.getUserisUserField(), "1");
+                            userInfo.put(constant.getUserisOrganizerField(), "0");
+                        } else {
+                            userInfo.put(constant.getUserisOrganizerField(), "1");
+                            userInfo.put(constant.getUserisUserField(), "0");
+                        }
+
+                        Log.d(dTAG, "loginWithCredential: " + userInfo.toString());
+                        documentReference.set(userInfo);
+
+                        if (temp_flag == 0)
+                            Toast.makeText(LoginActivity.this, "User Mode", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(LoginActivity.this, "Organizer Mode", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+
+                    } else {
+//                        Create new account
+                        Log.d(dTAG, "onComplete: does not exist");
+                        userInfo.put(constant.getUserNameField(), user.getDisplayName());
+                        userInfo.put(constant.getUserEmailField(), user.getEmail());
+                        userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
+                        userInfo.put(constant.getUserPhotoField(), user.getPhotoUrl().toString());
 
 
-                } else {
-                    userInfo.put(constant.getUserNameField(), user.getDisplayName());
-                    userInfo.put(constant.getUserEmailField(), user.getEmail());
-                    userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
+                        //        Now we check the role selected
+                        if (temp_flag == 0) {
+                            userInfo.put(constant.getUserisUserField(), "1");
+                            userInfo.put(constant.getUserisOrganizerField(), "0");
+                        } else {
+                            userInfo.put(constant.getUserisOrganizerField(), "1");
+                            userInfo.put(constant.getUserisUserField(), "0");
+                        }
+
+                        Log.d(dTAG, "loginWithCredential: " + userInfo.toString());
+                        documentReference.set(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //                Update connection to null
+                                CollectionReference connectionRef = firebaseDB.collection(constant.getChatConnections());
+                                connectionRef.document(firebaseAuth.getUid()).set(new ChatConnectionModel(null, null));
+                            }
+                        });
+
+                        if (temp_flag == 0)
+                            Toast.makeText(LoginActivity.this, "User Mode", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(LoginActivity.this, "Organizer Mode", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
                 }
             }
         });
-
-
-//        Now we check the role selected
-        if (temp_flag == 0) {
-            userInfo.put(constant.getUserisUserField(), "1");
-            userInfo.put(constant.getUserisOrganizerField(), "0");
-        }
-        else {
-            userInfo.put(constant.getUserisOrganizerField(), "1");
-            userInfo.put(constant.getUserisUserField(), "0");
-        }
-
-        documentReference.update(userInfo);
-
-        if (temp_flag == 0)
-            Toast.makeText(this, "User Mode", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(this, "Organizer Mode", Toast.LENGTH_SHORT).show();
-
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
 
     }
 
@@ -422,7 +466,6 @@ public class LoginActivity extends AppCompatActivity {
 
 //                Get email address from user
                 m_mail = input.getText().toString();
-
 
 //                Send password reset link
                 if (!m_mail.isEmpty()) {

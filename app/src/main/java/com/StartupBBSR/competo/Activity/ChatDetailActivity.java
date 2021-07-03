@@ -1,18 +1,12 @@
 package com.StartupBBSR.competo.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.net.Uri;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.ChatAdapter;
 import com.StartupBBSR.competo.Models.MessageModel;
+import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.ActivityChatDetailBinding;
 import com.bumptech.glide.Glide;
@@ -25,6 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.Date;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatDetailActivity extends AppCompatActivity {
 
@@ -62,9 +60,14 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         binding.chatUserName.setText(receiverName);
 
-        Glide.with(ChatDetailActivity.this)
-                .load(Uri.parse(receiverPhoto))
-                .into(binding.chatUserImage);
+        if (receiverPhoto != null)
+            Glide.with(ChatDetailActivity.this)
+                    .load(Uri.parse(receiverPhoto))
+                    .into(binding.chatUserImage);
+        else
+            Glide.with(ChatDetailActivity.this)
+                    .load(R.drawable.ic_baseline_person_24)
+                    .into(binding.chatUserImage);
 
         senderRoom = senderID + receiverID;
         receiverRoom = receiverID + senderID;
@@ -105,7 +108,6 @@ public class ChatDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         initData();

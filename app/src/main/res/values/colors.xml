@@ -18,6 +18,10 @@
     <color name="faded_light_blue">#F6F9FA</color>
     <color name="light_blue">#0091EA</color>
     <color name="background_blue">#1868A6</color>
+    
+    <color name="onboarding_blue">#33B5E5</color>
+    <color name="onboarding_pink">#E31A74</color>
+    <color name="onboarding_green">#12BFA8</color>
 
 
     <color name="main_background">#263238</color>

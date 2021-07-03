@@ -1,12 +1,10 @@
 package com.StartupBBSR.competo.Fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.TeamListAdapter;
 import com.StartupBBSR.competo.Models.TeamModel;
@@ -14,10 +12,8 @@ import com.StartupBBSR.competo.Models.UserModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentTeamMainBinding;
-import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -120,6 +116,18 @@ public class TeamMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+        binding.teamRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && binding.btnCreateTeamFab.getVisibility() == View.VISIBLE) {
+                    binding.btnCreateTeamFab.hide();
+                } else if (dy < 0 && binding.btnCreateTeamFab.getVisibility() != View.VISIBLE) {
+                    binding.btnCreateTeamFab.show();
+                }
+            }
+        });
     }
 
     @Override

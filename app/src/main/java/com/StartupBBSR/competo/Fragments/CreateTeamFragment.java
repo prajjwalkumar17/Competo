@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.CreateTeamUserListAdapter;
-import com.StartupBBSR.competo.Adapters.TeamChatAdapter;
 import com.StartupBBSR.competo.Models.EventPalModel;
 import com.StartupBBSR.competo.Models.TeamModel;
-import com.StartupBBSR.competo.Models.UserModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentCreateTeamBinding;
@@ -42,6 +40,7 @@ import java.util.ArrayList;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -115,11 +114,13 @@ public class CreateTeamFragment extends Fragment {
                     if (adapter.getSelected().size() >= 2) {
                         ArrayList<EventPalModel> selectedUsers = adapter.getSelected();
                         selectedUserIds = new ArrayList<>();
-                        for (EventPalModel model: selectedUsers) {
+                        for (EventPalModel model : selectedUsers) {
                             selectedUserIds.add(model.getUserID());
                         }
 //                        To add the creator to the team as well
-                        selectedUserIds.add(userID);
+                        if (!selectedUserIds.contains(userID))
+                            selectedUserIds.add(userID);
+
                         uploadPhoto();
                     } else {
                         Toast.makeText(getContext(), "Select more than 1 member", Toast.LENGTH_SHORT).show();
@@ -131,11 +132,26 @@ public class CreateTeamFragment extends Fragment {
             }
         });
 
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                return false;
+            }
+        });
+
         return view;
     }
 
     private void initData() {
         Query query = collectionReference.orderBy(constant.getUserIdField()).whereNotEqualTo(constant.getUserIdField(), userID);
+
         options = new FirestoreRecyclerOptions.Builder<EventPalModel>()
                 .setQuery(query, EventPalModel.class)
                 .build();
@@ -148,6 +164,7 @@ public class CreateTeamFragment extends Fragment {
 
         adapter = new CreateTeamUserListAdapter(options, getContext());
         recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     private void uploadPhoto() {
@@ -232,7 +249,7 @@ public class CreateTeamFragment extends Fragment {
 
 //                        Updating Team Connection of every user with team ID
                         CollectionReference teamConnectionRef = firestoreDB.collection(constant.getChatConnections());
-                        for (String id: teamMembers) {
+                        for (String id : teamMembers) {
                             teamConnectionRef.document(id).update(constant.getTeamConnections(), FieldValue.arrayUnion(teamID));
                         }
                         binding.progressBar.setVisibility(View.GONE);
@@ -247,6 +264,18 @@ public class CreateTeamFragment extends Fragment {
                 binding.btnCreateTeam.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+
+    private void search(String newText) {
+        Query teamUserSearchQuery = collectionReference.orderBy(constant.getUserNameField())
+                .whereGreaterThanOrEqualTo(constant.getUserNameField(), newText);
+
+        options = new FirestoreRecyclerOptions.Builder<EventPalModel>()
+                .setQuery(teamUserSearchQuery, EventPalModel.class)
+                .build();
+
+        initRecyclerView();
     }
 
     private void pickImage() {
@@ -296,5 +325,18 @@ public class CreateTeamFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+
+        binding.createTeamRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && binding.btnCreateTeam.getVisibility() == View.VISIBLE) {
+                    binding.btnCreateTeam.hide();
+                } else if (dy < 0 && binding.btnCreateTeam.getVisibility() != View.VISIBLE) {
+                    binding.btnCreateTeam.show();
+                }
+            }
+        });
     }
 }

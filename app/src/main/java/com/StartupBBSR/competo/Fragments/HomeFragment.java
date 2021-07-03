@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
 
 
     // tab titles
-    private String[] homeTabTitles = new String[]{"Feed", "Events", "Event Pal", "Inbox"};
+    private String[] homeTabTitles = new String[]{"Feed", "Team Finder", "Events", "Inbox"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,11 +65,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void viewAllEvents() {
-        viewPager2.setCurrentItem(1, true);
+        viewPager2.setCurrentItem(2, true);
     }
 
     public void findTeamMate() {
-        viewPager2.setCurrentItem(2, true);
+        viewPager2.setCurrentItem(1, true);
     }
 
 
@@ -86,9 +86,9 @@ public class HomeFragment extends Fragment {
                 case 0:
                     return new FeedFragment();
                 case 1:
-                    return new EventFragment();
-                case 2:
                     return new EventPalFragment();
+                case 2:
+                    return new EventFragment();
                 case 3:
                     return new InboxFragment();
             }

@@ -46,10 +46,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImage"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="@dimen/grid_2x"
                 app:civ_border_color="@color/purple_500"
-                app:civ_border_width="0.5dp"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

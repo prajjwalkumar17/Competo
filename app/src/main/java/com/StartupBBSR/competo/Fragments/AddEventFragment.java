@@ -49,10 +49,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -294,23 +297,23 @@ public class AddEventFragment extends Fragment {
         if (flag != 0) {
 //            User clicked edit event
 //            loadData into views
+
+            SimpleDateFormat simpleEventDateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+            SimpleDateFormat simpleEventTimeFormat = new SimpleDateFormat("KK:mm a", Locale.US);
+
+            if (eventModel.getEventDateStamp() != null)
+                binding.DateET.setText(simpleEventDateFormat.format(new Date(Long.parseLong(eventModel.getEventDateStamp().toString()))));
+
+            if (eventModel.getEventTimeStamp() != null)
+                binding.TimeET.setText(simpleEventTimeFormat.format(new Date(Long.parseLong(eventModel.getEventTimeStamp().toString()))));
+
             binding.TitleET.setText(eventModel.getEventTitle());
             binding.DescriptionET.setText(eventModel.getEventDescription());
             binding.VenueET.setText(eventModel.getEventVenue());
-            binding.DateET.setText(eventModel.getEventDate());
-            binding.TimeET.setText(eventModel.getEventTime());
             binding.linkET.setText(eventModel.getEventLink());
 
             liveEventid = eventModel.getEventID();
             draftEventid = eventModel.getEventID();
-
-            /*if (getArguments().getSerializable("sourceFragment").equals("Live")) {
-
-            }
-            else {
-                liveEventid = eventModel.getEventID();
-                draftEventid = eventModel.getEventID();
-            }*/
 
             List<String> tags = eventModel.getEventTags();
             for (int i = 0; i < tags.size(); i++) {
@@ -431,13 +434,32 @@ public class AddEventFragment extends Fragment {
         String title = binding.TitleET.getText().toString();
         String description = binding.DescriptionET.getText().toString();
         String venue = binding.VenueET.getText().toString();
-        String date = binding.DateET.getText().toString();
-        String time = binding.TimeET.getText().toString();
         String link = binding.linkET.getText().toString();
         List<String> eventTags = new ArrayList<>();
 
-        Long dateStamp = eventDateStamp;
-        Long timeStamp = eventTimeStamp;
+        Long dateStamp, timeStamp;
+
+        if (eventDateStamp != null && eventTimeStamp != null) {
+            dateStamp = eventDateStamp;
+            timeStamp = eventTimeStamp;
+        } else {
+            String date = binding.DateET.getText().toString();
+            String time = binding.TimeET.getText().toString();
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+            DateFormat timeFormat = new SimpleDateFormat("KK:mm a", Locale.US);
+            Date mDate = null, mTime = null;
+            try {
+                mDate = (Date)dateFormat.parse(date);
+                mTime = (Date)timeFormat.parse(time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            dateStamp = mDate.getTime();
+            timeStamp = mTime.getTime();
+        }
+
 
         for (int i = 0; i < binding.tagsChipGroup.getChildCount(); ++i) {
             Chip chip = (Chip) binding.tagsChipGroup.getChildAt(i);
@@ -467,7 +489,7 @@ public class AddEventFragment extends Fragment {
 
         if (statusFlag == 0) {
 //            Save as draft
-//        EventModel eventModel = new EventModel(image, title, description, venue, date, time, link, eventTags, organizerID, draftEventid);
+
             EventModel eventModel = new EventModel(image, title, description, venue, dateStamp, timeStamp, link, eventTags, organizerID, draftEventid);
 
             eventDraftCollectionReference.document(draftEventid).set(eventModel)

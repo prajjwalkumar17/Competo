@@ -83,6 +83,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="@dimen/grid_2x"
                 android:scaleType="centerCrop"
+                app:civ_circle_background_color="@color/black"
                 app:civ_border_color="@color/main_background"
                 app:civ_border_width="1dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvSenderMessage"

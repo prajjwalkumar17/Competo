@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvSelectFilters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/grid_3x"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="Select Filters"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/btnApplyEventFilter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnApplyEventFilter" />
 
-    <Button
-        android:id="@+id/btnApplyEventFilter"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:text="Apply"
-        android:background="@drawable/button_round_shape"
-        android:layout_margin="@dimen/grid_3x"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="350dp"
-        android:layout_margin="@dimen/grid_2x"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnApplyEventFilter">
+        <Button
+            android:id="@+id/btnApplyEventFilter"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_margin="@dimen/grid_3x"
+            android:background="@drawable/button_round_shape"
+            android:text="Apply"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/filterEventChipGroup"
-            android:paddingBottom="@dimen/grid_3x"
-            style="@style/CustomChipStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/grid_3x">
+        <TextView
+            android:id="@+id/tvSelectFilters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/grid_3x"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Select Filters"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/btnApplyEventFilter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnApplyEventFilter" />
 
-        </com.google.android.material.chip.ChipGroup>
-    </ScrollView>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_margin="@dimen/grid_2x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnApplyEventFilter">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/filterEventChipGroup"
+                style="@style/CustomChipStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/grid_3x"
+                android:paddingBottom="@dimen/grid_3x">
+
+            </com.google.android.material.chip.ChipGroup>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

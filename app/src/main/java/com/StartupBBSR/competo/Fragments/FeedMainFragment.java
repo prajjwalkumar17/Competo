@@ -70,6 +70,16 @@ public class FeedMainFragment extends Fragment {
             }
         });
 
+
+        binding.btnExplore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
+                FeedFragment feedFragment = (FeedFragment) navHostFragment.getParentFragment();
+                feedFragment.findTeamMate();
+            }
+        });
+
         return view;
     }
 

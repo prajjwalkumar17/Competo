@@ -53,9 +53,6 @@ public class EventPalFragment extends Fragment {
 
     private FragmentEventPalBinding binding;
 
-    //    For Skill sets
-    private List<String> mSkillDataSet;
-
     private FirebaseFirestore firestoreDB;
     private FirebaseAuth firebaseAuth;
     private String userID;
@@ -138,13 +135,6 @@ public class EventPalFragment extends Fragment {
 
         adapter = new EventPalUserAdapter(getContext(), options);
         adapter.setOnItemClickListener(new EventPalUserAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-//                Toast.makeText(getContext(), "Item Click: " + mUserDataSet.get(position).getName(), Toast.LENGTH_SHORT).show();
-                TextView name = itemView.findViewById(R.id.tvEventPalUserName);
-                Toast.makeText(getContext(), "Item Click: " + name.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-
             @Override
             public void onButtonClick(DocumentSnapshot snapshot) {
                 EventPalModel model = snapshot.toObject(EventPalModel.class);

@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -77,6 +78,23 @@ public class EditProfileActivity extends AppCompatActivity {
 
 //        Get data from Main Activity via get Intent
         userModel = (UserModel) getIntent().getSerializableExtra(constant.getUserModelObject());
+
+
+        activityEditProfileBinding.BioTV.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (activityEditProfileBinding.BioTV.hasFocus()) {
+                    view.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_SCROLL:
+                            view.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
+                    }
+                }
+                return false;
+            }
+        });
+
 
         activityEditProfileBinding.btnEditProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +181,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (flag == 4) {
             updateUser();
         } else {
-            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -190,7 +208,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 //                Higher the number, higher the quality
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
                 byte[] data = baos.toByteArray();
 
                 uploadTask = storageReference.putBytes(data);
@@ -235,7 +253,6 @@ public class EditProfileActivity extends AppCompatActivity {
         } else {
             saveData();
         }
-
     }
 
     private void saveData() {
@@ -248,10 +265,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
         Map<String, Object> userInfo = new HashMap<>();
 
-        userInfo.put(constant.getUserNameField(), activityEditProfileBinding.etName.getText().toString());
-        userInfo.put(constant.getUserPhoneField(), activityEditProfileBinding.etPhone.getText().toString());
-        userInfo.put(constant.getUserLinkedinField(), activityEditProfileBinding.etLinkedIn.getText().toString());
-        userInfo.put(constant.getUserBioField(), activityEditProfileBinding.BioTV.getText().toString());
+        userInfo.put(constant.getUserNameField(), activityEditProfileBinding.etName.getText().toString().trim());
+        userInfo.put(constant.getUserPhoneField(), activityEditProfileBinding.etPhone.getText().toString().trim());
+        userInfo.put(constant.getUserLinkedinField(), activityEditProfileBinding.etLinkedIn.getText().toString().trim());
+        userInfo.put(constant.getUserBioField(), activityEditProfileBinding.BioTV.getText().toString().trim());
 
         if (downloadUri != null)
             userInfo.put(constant.getUserPhotoField(), downloadUri.toString());
@@ -266,7 +283,6 @@ public class EditProfileActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
     }
 
     private void deleteProfile() {

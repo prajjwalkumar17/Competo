@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,6 +208,7 @@ public class ManageLiveEventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        Nav controller won't work if not initialised in OnViewCreated
-//        navController = Navigation.findNavController(getActivity(), R.id.eventManageMainNavHostFragment);
+        navController = Navigation.findNavController(getActivity(), R.id.eventManageMainNavHostFragment);
+
     }
 }

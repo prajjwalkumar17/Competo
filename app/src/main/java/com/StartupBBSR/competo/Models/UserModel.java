@@ -12,14 +12,12 @@ public class UserModel implements Serializable {
     List<String> userChips;
     List<String> userEvents;
 
-    private String lastMessage;
-
     private Boolean selected;
 
     public UserModel() {
     }
 
-    public UserModel(String userName, String userEmail, String userPhoto, String userPhone, String userBio, String userLinkedin, String userRole, String organizerRole, String userID, List<String> userChips, String lastMessage) {
+    public UserModel(String userName, String userEmail, String userPhoto, String userPhone, String userBio, String userLinkedin, String userRole, String organizerRole, String userID, List<String> userChips) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPhoto = userPhoto;
@@ -30,7 +28,6 @@ public class UserModel implements Serializable {
         this.organizerRole = organizerRole;
         this.userID = userID;
         this.userChips = userChips;
-        this.lastMessage = lastMessage;
     }
 
     public String getOrganizerRole() {
@@ -111,14 +108,6 @@ public class UserModel implements Serializable {
 
     public void setUserID(String userID) {
         this.userID = userID;
-    }
-
-    public String getLastMessage() {
-        return lastMessage;
-    }
-
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
     }
 
 

@@ -31,10 +31,10 @@
 
             <LinearLayout
                 android:alpha="0.9"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="@dimen/grid_1x"
-                android:layout_marginEnd="@dimen/grid_1x"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:layout_marginEnd="@dimen/grid_2x"
                 android:background="@drawable/imageview_background_round"
                 android:elevation="@dimen/grid_1x"
                 android:gravity="center"

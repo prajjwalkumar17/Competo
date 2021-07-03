@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.StartupBBSR.competo.Models.EventPalModel;
+import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.databinding.FindUserItemBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -40,7 +41,11 @@ public class FindUserAdapter extends FirestoreRecyclerAdapter<EventPalModel, Fin
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EventPalModel model) {
         holder.name.setText(model.getName());
-        Glide.with(context).load(model.getPhoto()).into(holder.image);
+
+        if (model.getPhoto() != null)
+            Glide.with(context).load(model.getPhoto()).into(holder.image);
+        else
+            Glide.with(context).load(R.drawable.ic_baseline_person_24).into(holder.image);
     }
 
     @NonNull

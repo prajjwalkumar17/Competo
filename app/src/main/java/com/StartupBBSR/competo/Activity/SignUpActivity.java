@@ -309,8 +309,6 @@ import androidx.appcompat.app.AppCompatDelegate;
         userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
         userInfo.put(constant.getUserMyEventField(), null);
 
-//        Not sure if this would be useful
-        userInfo.put(constant.getLastMessage(), null);
 
 //        Now we check the role selected
         if (temp_flag == 0) {
@@ -376,9 +374,6 @@ import androidx.appcompat.app.AppCompatDelegate;
                     userInfo.put(constant.getUserIdField(), firebaseAuth.getUid());
                     userInfo.put(constant.getUserMyEventField(), null);
 
-//                    Not sure if this would be useful
-                    userInfo.put(constant.getLastMessage(), null);
-
 //                      Now we check the role selected from the switch
                     if (activitySignUpBinding.roleSwitch.isChecked()) {
                         userInfo.put(constant.getUserisUserField(), "1");
@@ -431,7 +426,6 @@ import androidx.appcompat.app.AppCompatDelegate;
         } else {
             flag++;
         }
-
     }
 
     private void checkRoleSwitch() {

@@ -6,7 +6,6 @@ import java.util.List;
 public class EventModel  implements Serializable {
     private String eventPoster;
     private String eventTitle, eventDescription, eventVenue;
-    private String eventDate, eventTime;
     private Long eventDateStamp, eventTimeStamp;
     private String eventLink;
     private List<String> eventTags;
@@ -18,22 +17,6 @@ public class EventModel  implements Serializable {
 
     public EventModel() {
 //        Firebase needs empty constructor
-    }
-
-    public EventModel(String eventPoster, String eventTitle, String eventDescription, String eventVenue, String eventDate, String eventTime, String eventLink,List<String> eventTags, String eventOrganizerID, String eventID) {
-        this.eventPoster = eventPoster;
-        this.eventTitle = eventTitle;
-        this.eventDescription = eventDescription;
-        this.eventVenue = eventVenue;
-        this.eventDate = eventDate;
-        this.eventTime = eventTime;
-        this.eventLink = eventLink;
-        this.eventTags = eventTags;
-        this.eventOrganizerID = eventOrganizerID;
-        this.eventID = eventID;
-
-//        Only for expanding rv
-        this.expanded = false;
     }
 
     public EventModel(String eventPoster, String eventTitle, String eventDescription, String eventVenue, Long eventDateStamp, Long eventTimeStamp, String eventLink,List<String> eventTags, String eventOrganizerID, String eventID) {
@@ -66,14 +49,6 @@ public class EventModel  implements Serializable {
 
     public String getEventVenue() {
         return eventVenue;
-    }
-
-    public String getEventDate() {
-        return eventDate;
-    }
-
-    public String getEventTime() {
-        return eventTime;
     }
 
     public String getEventLink() {

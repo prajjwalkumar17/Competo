@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.StartupBBSR.competo.Models.RequestModel;
-import com.StartupBBSR.competo.Models.UserModel;
+import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.RequestItemLayoutBinding;
 import com.bumptech.glide.Glide;
@@ -67,7 +67,10 @@ public class MessageRequestAdapter extends FirestoreRecyclerAdapter<RequestModel
                     DocumentSnapshot snapshot = task.getResult();
                     if (snapshot.exists()) {
                         holder.senderName.setText(snapshot.getString(constant.getUserNameField()));
-                        Glide.with(context).load(Uri.parse(snapshot.getString(constant.getUserPhotoField()))).into(holder.senderImage);
+                        if (snapshot.getString(constant.getUserPhotoField()) != null)
+                            Glide.with(context).load(Uri.parse(snapshot.getString(constant.getUserPhotoField()))).into(holder.senderImage);
+                        else
+                            Glide.with(context).load(R.drawable.ic_baseline_person_24).into(holder.senderImage);
                     }
                 }
             }
