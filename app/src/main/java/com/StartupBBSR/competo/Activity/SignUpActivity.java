@@ -43,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -346,8 +347,14 @@ import androidx.appcompat.app.AppCompatDelegate;
         checkEmptyField(activitySignUpBinding.emailET, activitySignUpBinding.emailTIL);
         checkEmptyField(activitySignUpBinding.passwordET, activitySignUpBinding.passwordTIL);
 
+        //check for email format
+        checkemailformat(activitySignUpBinding.emailET, activitySignUpBinding.emailTIL);
 
-        if (flag == 4) {
+        //check phone number
+        checkphonenumber(activitySignUpBinding.numberET, activitySignUpBinding.numberTIL);
+
+
+        if (flag == 6) {
 //            We can now register the user
             activitySignUpBinding.signUpProgressLayout.setVisibility(View.VISIBLE);
 
@@ -437,4 +444,43 @@ import androidx.appcompat.app.AppCompatDelegate;
         });
     }
 
-}
+     private void checkemailformat(EditText et, TextInputLayout til)
+     {
+         if(Pattern.compile("gmail\\.com$").matcher(et.getText().toString()).find())
+         {
+             flag++;
+         }
+         else if(Pattern.compile("hotmail\\.com$").matcher(et.getText().toString()).find())
+         {
+             flag++;
+         }
+         else if(Pattern.compile("yahoo\\.com$").matcher(et.getText().toString()).find())
+         {
+             flag++;
+         }
+         else if(Pattern.compile("kiit\\.ac\\.in$").matcher(et.getText().toString()).find())
+         {
+             flag++;
+         }
+         else
+         {
+             til.setError("Please enter correct format");
+             til.setErrorEnabled(true);
+         }
+     }
+
+     private void checkphonenumber(EditText et, TextInputLayout til)
+     {
+         if(Pattern.compile("^[1-9][0-9]{9}$").matcher(et.getText().toString()).find())
+         {
+             flag++;
+         }
+         else
+         {
+             til.setError("Please correct the phone number");
+             til.setErrorEnabled(true);
+         }
+     }
+
+
+ }

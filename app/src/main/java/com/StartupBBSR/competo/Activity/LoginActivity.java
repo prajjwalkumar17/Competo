@@ -46,6 +46,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -418,7 +419,11 @@ public class LoginActivity extends AppCompatActivity {
         checkEmptyField(activityLoginBinding.emailET, activityLoginBinding.emailTIL);
         checkEmptyField(activityLoginBinding.passwordET, activityLoginBinding.passwordTIL);
 
-        if (flag == 2) {
+        //check for correct email format
+        checkemailformat(activityLoginBinding.emailET, activityLoginBinding.emailTIL);
+
+
+        if (flag == 3) {
 //            Now we can attempt to login the user
             activityLoginBinding.loginProgressLayout.setVisibility(View.VISIBLE);
 
@@ -505,6 +510,31 @@ public class LoginActivity extends AppCompatActivity {
             flag++;
         }
 
+    }
+
+    private void checkemailformat(EditText et, TextInputLayout til)
+    {
+        if(Pattern.compile("gmail\\.com$").matcher(et.getText().toString()).find())
+        {
+            flag++;
+        }
+        else if(Pattern.compile("hotmail\\.com$").matcher(et.getText().toString()).find())
+        {
+            flag++;
+        }
+        else if(Pattern.compile("yahoo\\.com$").matcher(et.getText().toString()).find())
+        {
+            flag++;
+        }
+        else if(Pattern.compile("kiit\\.ac\\.in$").matcher(et.getText().toString()).find())
+        {
+            flag++;
+        }
+        else
+        {
+            til.setError("Please enter correct format");
+            til.setErrorEnabled(true);
+        }
     }
 
 }
