@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.StartupBBSR.competo.Firebasemessaging.MyFirebaseMessagingService;
 import com.StartupBBSR.competo.Fragments.FindFragment;
 import com.StartupBBSR.competo.Fragments.HomeFragment;
 import com.StartupBBSR.competo.Fragments.ProfileFragment;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.List;
 
@@ -114,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -224,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_logOut) {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("weather");
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Log Out");
             builder.setMessage("Are you sure you want to log out?");
