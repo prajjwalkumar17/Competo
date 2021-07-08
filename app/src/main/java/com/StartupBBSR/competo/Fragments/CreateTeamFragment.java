@@ -1,14 +1,19 @@
 package com.StartupBBSR.competo.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.CreateTeamUserListAdapter;
@@ -17,6 +22,7 @@ import com.StartupBBSR.competo.Models.TeamModel;
 import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentCreateTeamBinding;
+import com.StartupBBSR.competo.databinding.ViewmembersAlertLayoutBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.Continuation;
@@ -66,7 +72,9 @@ public class CreateTeamFragment extends Fragment {
     private CreateTeamUserListAdapter adapter;
     private FirestoreRecyclerOptions<EventPalModel> options;
 
-    private ArrayList<String> selectedUserIds;
+    private ArrayList<String> selectedUserIds, selectedNames;
+    private ListView memberNameListView;
+    private ArrayAdapter<String> memberNameListAdapter;
 
     public static final String TAG = "team";
     private static final int REQUEST_PHOTO_CODE = 123;
@@ -111,22 +119,56 @@ public class CreateTeamFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!binding.etTeamName.getText().toString().equals("")) {
-                    if (adapter.getSelected().size() >= 2) {
-                        ArrayList<EventPalModel> selectedUsers = adapter.getSelected();
-                        selectedUserIds = new ArrayList<>();
-                        for (EventPalModel model : selectedUsers) {
-                            selectedUserIds.add(model.getUserID());
-                        }
-//                        To add the creator to the team as well
-                        if (!selectedUserIds.contains(userID))
-                            selectedUserIds.add(userID);
+                    if (imageUri != null) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "running: ");
+                                ArrayList<EventPalModel> selectedUsers = adapter.getSelected();
 
-                        uploadPhoto();
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (selectedUsers.size() >= 2 && selectedUsers.size() <= 6) {
+                                            Log.d(TAG, "run: " + selectedUsers.size());
+
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    selectedUserIds = new ArrayList<>();
+                                                    selectedNames = new ArrayList<>();
+
+                                                    for (EventPalModel model : selectedUsers) {
+                                                        selectedUserIds.add(model.getUserID());
+                                                        selectedNames.add(model.getName());
+                                                    }
+
+                                                    getActivity().runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            if (!selectedUserIds.contains(userID))
+                                                                selectedUserIds.add(userID);
+
+                                                            Log.d(TAG, "run2: " + selectedUserIds);
+                                                            showSelectedNames();
+                                                        }
+                                                    });
+                                                }
+                                            }).start();
+                                        } else if (selectedUsers.size() < 2)
+                                            Toast.makeText(getContext(), "Select more than 1 member", Toast.LENGTH_SHORT).show();
+                                        else
+                                            Toast.makeText(getContext(), "Cannot add more than 6 members", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        }).start();
                     } else {
-                        Toast.makeText(getContext(), "Select more than 1 member", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Select a team image", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Name cannot be blank", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Give your team a name", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -147,6 +189,30 @@ public class CreateTeamFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void showSelectedNames() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Create new team?");
+        builder.setMessage("Team Name: " + binding.etTeamName.getText().toString().trim() + "\nSelected Names:");
+        ViewmembersAlertLayoutBinding viewmembersAlertLayoutBinding = ViewmembersAlertLayoutBinding.inflate(getLayoutInflater());
+        View view = viewmembersAlertLayoutBinding.getRoot();
+        memberNameListView = viewmembersAlertLayoutBinding.membersListView;
+        memberNameListAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, selectedNames);
+        memberNameListView.setAdapter(memberNameListAdapter);
+        memberNameListAdapter.notifyDataSetChanged();
+        builder.setView(view);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                uploadPhoto();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
     }
 
     private void initData() {

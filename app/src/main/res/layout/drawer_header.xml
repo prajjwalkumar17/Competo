@@ -11,11 +11,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background_default" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_gradient" />
-
     <TextView
         android:id="@+id/tvHeaderName"
         android:layout_width="0dp"
@@ -25,13 +20,11 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:maxLines="1"
-        android:text="Name"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tvHeaderRole"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <TextView
         android:id="@+id/tvHeaderRole"
@@ -43,12 +36,17 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:scrollHorizontally="true"
-        android:text="Role"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient" />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -57,6 +55,9 @@
         android:layout_height="70dp"
         android:layout_marginStart="@dimen/grid_3x"
         android:src="@drawable/ic_baseline_person_24"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        app:civ_circle_background_color="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/tvHeaderName"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.StartupBBSR.competo.Activity.ChatDetailActivity;
 import com.StartupBBSR.competo.Models.EventPalModel;
-import com.StartupBBSR.competo.Models.UserModel;
+import com.StartupBBSR.competo.R;
 import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.InboxItemBinding;
 import com.bumptech.glide.Glide;
@@ -45,27 +45,29 @@ public class ChatUserListAdapter extends FirestoreRecyclerAdapter<EventPalModel,
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull EventPalModel model) {
         holder.name.setText(model.getName());
         // TODO: 6/7/2021 implement last message
-        Glide.with(context).load(Uri.parse(model.getPhoto())).into(holder.image);
+        if (model.getPhoto() != null)
+            Glide.with(context).load(Uri.parse(model.getPhoto())).into(holder.image);
+        else
+            Glide.with(context).load(R.drawable.ic_baseline_person_24).into(holder.image);
 
 //        Showing last message
         FirebaseFirestore.getInstance().collection(constants.getChats())
-                .document(FirebaseAuth.getInstance().getUid()+model.getUserID())
+                .document(FirebaseAuth.getInstance().getUid() + model.getUserID())
                 .collection(constants.getMessages())
                 .orderBy("timestamp")
                 .limitToLast(1)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error!=null){
+                        if (error != null) {
                             return;
                         }
 
-                        for (QueryDocumentSnapshot queryDocumentSnapshot : value){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : value) {
                             holder.lastMessage.setText(queryDocumentSnapshot.getString("message"));
                         }
                     }
                 });
-
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

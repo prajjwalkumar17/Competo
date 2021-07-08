@@ -81,9 +81,10 @@ public class TeamMainFragment extends Fragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot snapshot = task.getResult();
+
                     teamList = (List<String>) snapshot.get(constant.getTeamConnections());
-                    Log.d("team", "onComplete: " + teamList);
-                    if (teamList != null) {
+//                    Log.d("team", "onComplete: " + teamList);
+                    if (teamList != null && teamList.size() != 0) {
                         initData();
                     }
                 }
