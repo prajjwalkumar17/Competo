@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
 
     public void init() {
         viewPager2.setAdapter(new HomeViewPagerFragmentAdapter(this));
-        viewPager2.setUserInputEnabled(false);
+      //  viewPager2.setUserInputEnabled(false);
 
 //        Attaching tab mediator
         new TabLayoutMediator(binding.tabLayout2,

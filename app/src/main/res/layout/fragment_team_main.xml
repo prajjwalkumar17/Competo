@@ -13,7 +13,7 @@
         android:layout_margin="@dimen/grid_3x"
         android:background="@color/white"
         android:elevation="0dp"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
