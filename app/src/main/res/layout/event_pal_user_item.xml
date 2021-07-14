@@ -7,7 +7,7 @@
     android:background="?selectableItemBackground"
     android:foreground="?selectableItemBackground"
     app:cardBackgroundColor="@color/text_gray"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="30dp"
     app:cardUseCompatPadding="true">
 
     <ImageView
@@ -24,26 +24,37 @@
         <FrameLayout
             android:id="@+id/EventPalBottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="285dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded"
-            app:behavior_peekHeight="@dimen/bottom_sheet_collapsed_height"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_peekHeight = "@dimen/bottom_sheet_collapsed_height">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="402dp"
-                android:layout_height="288dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/btnSendMessage"
-                    android:layout_width="296dp"
-                    android:layout_height="47dp"
-                    android:layout_marginBottom="28dp"
+                    android:layout_width="@dimen/standard_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/eventpal_button_round"
                     android:text="Message Request"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/eventPal_UserSkillRecyclerView"
-                    app:layout_constraintHorizontal_bias="0.494"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBottomSheet"
+                    android:layout_width="56dp"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="User Profile"
+                    android:paddingTop="@dimen/grid_1x"
+                    android:src="@drawable/ic_upperarrow"
+                    app:layout_constraintBottom_toTopOf="@+id/tvEventPalUserName"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
@@ -52,18 +63,17 @@
                     android:layout_height="150dp"
                     android:layout_marginStart="@dimen/grid_3x"
                     android:layout_marginEnd="@dimen/grid_3x"
-                    android:layout_marginBottom="20dp"
-                    android:autoLink="all"
+                    android:layout_marginBottom="16dp"
                     android:paddingTop="@dimen/grid_1x"
                     android:paddingBottom="@dimen/grid_1x"
                     android:text="About Section"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColorLink="#2A91D1"
-                    android:textSize="16sp"
                     android:visibility="gone"
+                    android:autoLink="all"
+                    android:textColorLink="#2A91D1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/eventPal_UserSkillRecyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
@@ -72,50 +82,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_3x"
                     android:layout_marginEnd="@dimen/grid_3x"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="8dp"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
+                    android:textStyle="bold"
                     android:maxLines="1"
-                    android:paddingLeft="15dp"
                     android:text="Satyajit Mishra"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/tvEventPalUserAbout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/eventPal_UserSkillRecyclerView"
-                    android:layout_width="358dp"
-                    android:layout_height="86dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
                     android:layout_marginStart="@dimen/grid_3x"
                     android:layout_marginEnd="@dimen/grid_3x"
-                    android:layout_marginBottom="28dp"
-                    android:paddingLeft="15dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvEventPalUserName"
+                    android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:listitem="@layout/interest_chip_item" />
 
-               <ImageView
-                    android:id="@+id/btnBottomSheet"
-                    android:layout_width="73dp"
-                    android:layout_height="28dp"
-                    android:contentDescription="User Profile"
-                    android:paddingTop="@dimen/grid_2x"
-                    android:src="@drawable/ic_upperarrow"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/tvEventPalUserName"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
