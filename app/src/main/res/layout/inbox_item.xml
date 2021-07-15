@@ -30,7 +30,7 @@
         android:text="Name"
         android:textColor="@color/black"
         android:textSize="17sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/palanquin_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_conveProfile"
         app:layout_constraintTop_toTopOf="parent" />

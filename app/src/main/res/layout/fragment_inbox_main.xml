@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="575dp"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/grid_3x"
         android:background="@color/white"
         android:elevation="0dp"
@@ -19,42 +19,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_2x"
-            android:layout_marginStart="@dimen/grid_3x"
-            android:fontFamily="sans-serif"
-            android:gravity="start"
-            android:text="Inbox"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chatListRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/grid_3x"
-            android:paddingTop="40dp"
-            android:layout_marginTop="@dimen/grid_2x"
-            tools:listitem="@layout/inbox_item" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_3x"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:text="Inbox"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvMessageRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="right"
-            android:text="Message Requests"
-            android:textColor="@color/ui_light_blue"
-            android:textSize="16sp"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/tvMessageRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Message Requests"
+                android:textColor="@color/ui_light_blue"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/grid_2x"
+                android:layout_marginEnd="@dimen/grid_2x"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/inbox_refresh_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/grid_3x"
+                tools:listitem="@layout/inbox_item" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,6 @@
         android:minWidth="70dp"
         android:gravity="center"
         android:text="HR"
-        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/ui_light_blue"
         android:textSize="12sp"

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.StartupBBSR.competo.Adapters.TeamListAdapter;
 import com.StartupBBSR.competo.Models.TeamModel;
@@ -14,6 +15,7 @@ import com.StartupBBSR.competo.Utils.Constant;
 import com.StartupBBSR.competo.databinding.FragmentTeamMainBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -21,6 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class TeamMainFragment extends Fragment {
 
@@ -88,6 +93,33 @@ public class TeamMainFragment extends Fragment {
                         initData();
                     }
                 }
+            }
+        });
+
+        binding.teamRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                teamRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot snapshot = task.getResult();
+
+                            teamList = (List<String>) snapshot.get(constant.getTeamConnections());
+//                    Log.d("team", "onComplete: " + teamList);
+                            binding.teamRefreshLayout.setRefreshing(false);
+                            if (teamList != null && teamList.size() != 0) {
+                                initData();
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(getContext(), "Could not refresh", Toast.LENGTH_SHORT).show();
+                        binding.teamRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 

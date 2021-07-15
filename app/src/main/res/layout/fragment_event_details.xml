@@ -23,35 +23,39 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEventRegister"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_2x"
             android:layout_weight="1"
-            android:background="@drawable/eventpal_button_round"
+            android:textColor="#33B5E5"
+            android:background="@drawable/event_detail_button_round"
             android:text="Register"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEventFindPal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_2x"
             android:layout_weight="1"
-            android:background="@drawable/eventpal_button_round"
+            android:textColor="#33B5E5"
+            android:background="@drawable/event_detail_button_round"
             android:text="Find a TeamMate"
             android:textAllCaps="false"
             android:textSize="12sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAddToMyEvents"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/grid_2x"
             android:layout_weight="1"
-            android:background="@drawable/eventpal_button_round"
+            android:textColor="#33B5E5"
+            android:padding="@dimen/grid_1x"
+            android:background="@drawable/event_detail_button_round"
             android:text="Add to wishlist"
             android:textAllCaps="false"
             android:textSize="12sp" />

@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.StartupBBSR.competo.databinding.FragmentInboxMainBinding;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -38,6 +40,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +113,34 @@ public class InboxMainFragment extends Fragment {
         });
 
         getRequestCounts();
+
+
+        binding.inboxRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRequestCounts();
+                chatRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            chatUsers = (List<String>) documentSnapshot.get("Connections");
+                            Log.d(TAG, "onComplete: " + chatUsers);
+                            binding.inboxRefreshLayout.setRefreshing(false);
+                            if (chatUsers != null){
+                                initData();
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(getContext(), "Could not refresh", Toast.LENGTH_SHORT).show();
+                        binding.inboxRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
 
         return view;
     }

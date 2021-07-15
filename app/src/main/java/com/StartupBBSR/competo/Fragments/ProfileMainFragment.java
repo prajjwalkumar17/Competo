@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -75,17 +73,6 @@ public class ProfileMainFragment extends Fragment {
             }
         });
 
-        binding.pullToRefresh.setEnabled(false);
-
-        binding.btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.pullToRefresh.setRefreshing(true);
-                loadData();
-                binding.pullToRefresh.setRefreshing(false);
-            }
-        });
-
 
         init();
         initDataSet();
@@ -107,6 +94,17 @@ public class ProfileMainFragment extends Fragment {
             binding.profileBrief.setText(Arrays.toString(tempData).replaceAll("\\[|\\]", ""));
         }
 
+        binding.profileRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+                init();
+                initDataSet();
+                binding.profileRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         return view;
     }
 
@@ -118,7 +116,6 @@ public class ProfileMainFragment extends Fragment {
         loadData();
 
         navController = Navigation.findNavController(view);
-
 
 
         if (userModel.getUserLinkedin() == null) {

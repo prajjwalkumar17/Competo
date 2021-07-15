@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,42 +40,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cvPoster" />
 
-        <!--        <TextView
-                    android:id="@+id/tvFeatured"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/grid_4x"
-                    android:fontFamily="sans-serif"
-                    android:text="Featured"
-                    android:layout_marginTop="@dimen/grid_4x"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        =======
-                <TextView
-                    android:id="@+id/tvFeatured"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="sans-serif"
-                    android:text="Featured"
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-        >>>>>>> a9a92c82b714edba99d47f7e300ca82879dde95f
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cvPoster" />
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvFeatured"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="@dimen/grid_3x"
-                    android:layout_marginStart="@dimen/grid_4x"
-                    android:layout_marginEnd="@dimen/grid_4x"
-                    app:cardCornerRadius="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvFeatured"/>-->
-
         <TextView
             android:id="@+id/tvViewAllUpcomingEvents"
             android:layout_width="wrap_content"
@@ -96,8 +59,8 @@
             android:layout_height="250dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="@dimen/grid_3x"
-            android:layout_marginEnd="@dimen/grid_4x"
-            app:cardCornerRadius="25dp"
+            android:layout_marginEnd="@dimen/grid_3x"
+            app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEventPal">
@@ -117,7 +80,7 @@
 
             <ImageView
                 android:id="@+id/cvPosterImage"
-                android:layout_width="427dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/iron_man" />

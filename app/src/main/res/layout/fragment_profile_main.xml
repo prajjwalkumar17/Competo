@@ -2,7 +2,7 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pullToRefresh"
+    android:id="@+id/profile_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
@@ -12,18 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/btnEditInterests"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/grid_3x"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="@+id/interestChipRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_3x"
             android:layout_marginRight="@dimen/grid_3x"
             android:layout_marginBottom="@dimen/grid_3x"
-            android:layout_marginTop="@dimen/grid_3x"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/interestChipRecyclerView">
+
+
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/profile_tablayout"
@@ -51,12 +62,10 @@
 
             </com.google.android.material.tabs.TabLayout>
 
-
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/profileViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
 
 
         </LinearLayout>
@@ -65,8 +74,8 @@
             android:id="@+id/image_rel_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/grid_3x"
-            android:layout_marginTop="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_2x"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -94,101 +103,68 @@
                 android:paddingStart="@dimen/grid_2x"
                 android:paddingEnd="@dimen/grid_2x"
                 android:src="@drawable/ic_baseline_person_24"
-                app:civ_border_color="@color/main_accent_1"
+                app:civ_border_color="@color/white"
                 app:civ_border_width="1dp"
                 app:civ_circle_background_color="@color/main_background" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingStart="@dimen/grid_3x"
-            android:paddingTop="@dimen/grid_1x"
-            android:scrollHorizontally="true"
-            tools:text = "Name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
-            app:layout_constraintTop_toTopOf="@+id/image_rel_layout" />
-
-        <TextView
             android:id="@+id/profile_brief"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingStart="@dimen/grid_3x"
+            android:layout_marginTop="@dimen/grid_1x"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
             android:maxLines="2"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_gotolinkedin"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="@dimen/grid_3x"
-            android:src="@drawable/linkedin_logo"
-            app:civ_border_color="@color/ui_blue"
-            app:civ_border_width="0.5dp"
-            android:layout_marginTop="@dimen/grid_2x"
-            app:civ_circle_background_color="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/image_rel_layout"
-            app:layout_constraintStart_toEndOf="@+id/image_rel_layout"
-            app:layout_constraintTop_toBottomOf="@+id/profile_brief" />
-
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_3x"
-            android:text="Skills"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:maxWidth="@dimen/standard_width"
+            android:layout_marginTop="@dimen/grid_1x"
+            android:scrollHorizontally="true"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/image_rel_layout"
-            app:layout_constraintTop_toBottomOf="@+id/image_rel_layout" />
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_rel_layout"
+            tools:text="Name" />
 
-        <ImageView
-            android:id="@+id/btnEditInterests"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_baseline_edit_24"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/textView14" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/interestChipRecyclerView"
             android:layout_width="0dp"
             android:layout_height="135dp"
-            tools:listitem="@layout/interest_chip_item"
-            android:paddingTop="@dimen/grid_1x"
-            android:paddingBottom="@dimen/grid_1x"
-            android:layout_marginStart="@dimen/grid_3x"
-            android:layout_marginEnd="@dimen/grid_3x"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="@dimen/grid_2x"
+            android:layout_marginTop="@dimen/grid_1x"
+            app:layout_constraintEnd_toStartOf="@+id/btnEditInterests"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_gotolinkedin"
+            tools:listitem="@layout/interest_chip_item" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_gotolinkedin"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/grid_1x"
+            android:src="@drawable/linkedin_logo"
+            app:civ_border_color="@color/ui_blue"
+            app:civ_border_width="0.5dp"
+            app:civ_circle_background_color="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-        <ImageView
-            android:id="@+id/btnRefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_2x"
-            android:layout_marginEnd="@dimen/grid_2x"
-            android:src="@drawable/ic_baseline_refresh_24"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_brief" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

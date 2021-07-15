@@ -7,7 +7,7 @@
     android:background="?selectableItemBackground"
     android:foreground="?selectableItemBackground"
     app:cardBackgroundColor="@color/text_gray"
-    app:cardCornerRadius="30dp"
+    app:cardCornerRadius="20dp"
     app:cardUseCompatPadding="true">
 
     <ImageView
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSendMessage"
                     android:layout_width="@dimen/standard_width"
                     android:layout_height="wrap_content"
@@ -41,21 +41,23 @@
                     android:background="@drawable/eventpal_button_round"
                     android:text="Message Request"
                     android:textAllCaps="false"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnBottomSheet"
-                    android:layout_width="56dp"
+                    android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/grid_2x"
                     android:contentDescription="User Profile"
-                    android:paddingTop="@dimen/grid_1x"
                     android:src="@drawable/ic_upperarrow"
+                    android:layout_marginTop="@dimen/grid_2x"
                     app:layout_constraintBottom_toTopOf="@+id/tvEventPalUserName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvEventPalUserAbout"
@@ -82,12 +84,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/grid_3x"
                     android:layout_marginEnd="@dimen/grid_3x"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/grid_2x"
                     android:ellipsize="end"
-                    android:fontFamily="sans-serif"
-                    android:textStyle="bold"
-                    android:maxLines="1"
-                    android:text="Satyajit Mishra"
+                    android:fontFamily="@font/palanquin_semibold"
+                    android:maxLines="2"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toTopOf="@+id/tvEventPalUserAbout"
@@ -100,14 +100,13 @@
                     android:layout_height="96dp"
                     android:layout_marginStart="@dimen/grid_3x"
                     android:layout_marginEnd="@dimen/grid_3x"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/grid_3x"
                     app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:listitem="@layout/interest_chip_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

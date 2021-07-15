@@ -37,19 +37,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/teamRecyclerView"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/team_refresh_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/teamRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/grid_1x"
                 android:layout_marginEnd="@dimen/grid_1x"
                 android:paddingTop="@dimen/grid_3x"
                 android:paddingBottom="@dimen/grid_3x"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:listitem="@layout/team_item" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/btn_create_team_fab"
@@ -61,6 +68,7 @@
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_baseline_add_24"
                 app:iconTint="@color/white"
+                android:backgroundTint="@color/ui_light_blue"
                 app:rippleColor="@color/background_blue"
                 android:elevation="@dimen/grid_1x"
                 app:layout_constraintBottom_toBottomOf="parent"

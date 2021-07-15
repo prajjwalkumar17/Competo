@@ -210,14 +210,14 @@ public class EventPalFragment extends Fragment {
                     Log.d(TAG, "onButtonClick: STATE_COLLAPSED");
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     itemView.findViewById(R.id.tvEventPalUserAbout).setVisibility(View.VISIBLE);
-                    btnBottomSheet.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                    btnBottomSheet.setImageResource(R.drawable.down_arrow);
 
                 } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
 
                     Log.d(TAG, "onButtonClick: STATE_EXPANDED");
                     itemView.findViewById(R.id.tvEventPalUserAbout).setVisibility(View.GONE);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    btnBottomSheet.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                    btnBottomSheet.setImageResource(R.drawable.ic_upperarrow);
 
                 }
             }

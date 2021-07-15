@@ -81,6 +81,8 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp"
+                    android:backgroundTint="@color/ui_light_blue"
+                    app:rippleColor="@color/background_blue"
                     app:iconTint="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />

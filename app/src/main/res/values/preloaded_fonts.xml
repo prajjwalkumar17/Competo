@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/montserrat_bold</item>
         <item>@font/neuton</item>
+        <item>@font/palanquin_semibold</item>
     </array>
 </resources>
